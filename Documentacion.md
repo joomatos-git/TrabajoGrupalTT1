@@ -6,8 +6,6 @@ Servicio de simulación de criaturas sobre una cuadrícula 2D. Cada celda puede 
 
 Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la gestiona Java. Este proyecto reemplaza el swagger proporcionado por Javi.
 
-
-
 ## Tipos de criaturas
 
 | Tipo | Comportamiento |
@@ -31,7 +29,7 @@ Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la ge
 3. Con ese token, el usuario puede realizar peticiones HTTP para consultar el estado de la isla en distintos momentos (pueden pasar intervalos de tiempo entre peticiones).
 
 
-## 👥 Gestión de roles
+## Gestión de roles
 
 Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas consecutivas** para la misma persona.
 
@@ -43,7 +41,6 @@ Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas conse
 | Semana 4 | Alicia | Joseba (Tester) |
 | Semana 5 | Joseba | Alicia |
 
-
 ## Planificación
 
 ### Sprint 0
@@ -54,14 +51,12 @@ Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas conse
 - [ ] Reunión con el cliente (Javi) para resolución de dudas sobre requisitos
 - [ ] Primera distribución de tareas entre los miembros del equipo
 
-
 ## Estrategia de pruebas
 
 El proyecto está orientado a **tests**, con cobertura de:
 
 - **Tests unitarios**: validación de comportamiento individual de cada tipo de criatura.
 - **Tests de integración**: validación del sistema completo (inicialización de cuadrícula, avance de la simulación, resolución de conflictos, condición de fin).
-
 
 ## Tecnologías
 
