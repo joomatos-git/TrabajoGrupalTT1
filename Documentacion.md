@@ -1,4 +1,4 @@
-# Simulador de Criaturas — Documentación del Proyecto
+# Simulador de Criaturas: Documentación del Proyecto
 
 ## Descripción general
 
