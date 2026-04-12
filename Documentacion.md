@@ -1,50 +1,70 @@
-# Instrucciones
+# Simulador de Criaturas — Documentación del Proyecto
 
-Necesitamos usar Kanban en github, decir que rol desarrolla cada persona y que tienen que hacer, ponerlo para cada semana.
+## Descripción general
 
-Los roles rotan, cada semana uno cada uno, uno de desarollo y otro otra, no se puede repetir rol
+Servicio de simulación de criaturas sobre una cuadrícula 2D. Cada celda puede estar ocupada como máximo por **una criatura**, representada visualmente por un color. La simulación avanza instante a instante hasta que la cuadrícula se llena.
 
-Proyecto orientado a teses, con unitarios e integración
-
-Qué tiene que hacer: simulaciones de pequeñas criaturitas, simulación temporal
-
-Trab individual: Que un cuadrado este pintado de un color es que una criatura habita esa islita.  Cada bichito hace comportamientos distintos, se mueves, quitos, cada instante se replican... No puede haber dos bichos en una casilla
-
-- Quieta
-
-- Cada instante se mueve a una casilla adyacente
-
-- Se expande como una enfermedad, cada instante copia una copia perfecta en una posición adyacente.
-
-Generar inicialmente cuadricula con X,Y,Z de criaturas de cada tipo en posiciones aleatorias. La página web tiene que servir para devolver ese sistema y mostrar su “evolución”.
-
-Los bichos en principio no mueren, se acaba la ejecución cunado se llena la cuadricula
-
-Si dos bichos quieren ir a una misma casilla, nuestra decision: Soluion tomada: Priorizamos por fila y columna, tiene prioridad fila superior y columna derecha.
+Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la gestiona Java. Este proyecto reemplaza el swagger proporcionado por Javi.
 
 
-En el trabajo individual el usuario elegio un número de bichitos, después mandaba un token, y luego ya enseña la isla.  Entre token y token puede pasar mucho tiempo, peticiones http. Luego dev la cuadricula.
 
-Nosotros hacemos servicio, java hace capa presentación
+## Tipos de criaturas
 
-Estamos remplazando el pequeño swagger que os dio Javi.
+| Tipo | Comportamiento |
+|------|---------------|
+| **Quieta** | No se mueve. Permanece en su celda inicial. |
+| **Móvil** | Cada instante se desplaza a una celda adyacente. |
+| **Expansiva** | Cada instante genera una copia perfecta en una celda adyacente (comportamiento epidémico). |
 
-# Prevision
 
-## Gestion de roles
+## Reglas del sistema
 
-- Semana1: Desarrollador(Joseba) y Organizador(Alicia)
-- Semana2: Desarrollador(Alicia) y 
-- Semana3: Desarrollador(Joseba) y
-- Semana4: Desarrollador(Alicia) y Tester(Joseba)
-- Semana5
+- La cuadrícula se inicializa con **X criaturas de tipo A, Y de tipo B y Z de tipo C** en posiciones aleatorias.
+- **No pueden coincidir dos criaturas en la misma casilla.**
+- Las criaturas **no mueren**. La simulación termina cuando la cuadrícula está completamente llena.
+- **Resolución de conflictos** (dos criaturas quieren ir a la misma casilla): tiene prioridad la de **fila superior** y, en caso de empate, la de **columna más a la derecha**.
+
+## Flujo de uso
+
+1. El usuario elige el número de criaturas de cada tipo.
+2. El sistema devuelve un **token** de sesión.
+3. Con ese token, el usuario puede realizar peticiones HTTP para consultar el estado de la isla en distintos momentos (pueden pasar intervalos de tiempo entre peticiones).
+
+
+## 👥 Gestión de roles
+
+Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas consecutivas** para la misma persona.
+
+| Semana | Desarrollador | Organizador / Tester |
+|--------|--------------|----------------------|
+| Semana 1 | Joseba | Alicia (Organizadora) |
+| Semana 2 | Alicia | Joseba (Organizador) |
+| Semana 3 | Joseba | Alicia (Tester) |
+| Semana 4 | Alicia | Joseba (Tester) |
+| Semana 5 | Joseba | Alicia |
+
 
 ## Planificación
 
-## Sprint 0
-Empezamo planificación, Kanban.
-- Vamos a utilizar Java, para evitar formación en exceso.
-- 
-Probamos el IDE, damos un poquito de pena (según Javi eramos muy monos).
+### Sprint 0
 
-Hacemos cuestiones sobre requisitos, resolvemos dudas con el cliente. 
+- [ ] Configuración del tablero **Kanban en GitHub**
+- [ ] Decisión tecnológica: se usará **Java** (para minimizar formación adicional)
+- [ ] Configuración del **IDE** y primeras pruebas del entorno
+- [ ] Reunión con el cliente (Javi) para resolución de dudas sobre requisitos
+- [ ] Primera distribución de tareas entre los miembros del equipo
+
+
+## Estrategia de pruebas
+
+El proyecto está orientado a **tests**, con cobertura de:
+
+- **Tests unitarios**: validación de comportamiento individual de cada tipo de criatura.
+- **Tests de integración**: validación del sistema completo (inicialización de cuadrícula, avance de la simulación, resolución de conflictos, condición de fin).
+
+
+## Tecnologías
+
+- **Lenguaje**: Java
+- **Gestión de proyecto**: GitHub Projects (Kanban)
+- **Metodología**: Scrum / Kanban con sprints semanales
