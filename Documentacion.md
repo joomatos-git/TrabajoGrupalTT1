@@ -36,7 +36,7 @@ Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas conse
 | Semana | Desarrollador | Organizador / Tester |
 |--------|--------------|----------------------|
 | Semana 1 | Joseba | Alicia (Organizadora) |
-| Semana 2 | Alicia | Joseba (Organizador) |
+| Semana 2 | Alicia | Joseba (Tester) |
 | Semana 3 | Joseba | Alicia (Tester) |
 | Semana 4 | Alicia | Joseba (Tester) |
 | Semana 5 | Joseba | Alicia |
