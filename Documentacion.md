@@ -74,3 +74,9 @@ Tenemos proyecto maven
 En la carpeta Sistema.API creo las clases:
 A ver, he estado leyendo documentación pero no estaba entendiendo. Le doy la vuelta primero creo las interfaces para luego con el controller trabajar con ellas.
 Un API spring Boot que es lkoq eu voy a hacer se basa en: La parte del trabajo individiual->Controller->Modelo
+
+Joseba
+
+Tests. No estan bien ninguno. 
+
+De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
