@@ -63,3 +63,14 @@ El proyecto está orientado a **tests**, con cobertura de:
 - **Lenguaje**: Java
 - **Gestión de proyecto**: GitHub Projects (Kanban)
 - **Metodología**: Scrum / Kanban con sprints semanales
+
+## Sprint 1
+
+Alicia 
+
+El paquete servicio es el paquete que va a gestionar los bichitos
+Vamos a pasar nuestro proyecto a uno maven, para eso lo vamos a hacer manualmente, creo el pom
+Tenemos proyecto maven
+En la carpeta Sistema.API creo las clases:
+A ver, he estado leyendo documentación pero no estaba entendiendo. Le doy la vuelta primero creo las interfaces para luego con el controller trabajar con ellas.
+Un API spring Boot que es lkoq eu voy a hacer se basa en: La parte del trabajo individiual->Controller->Modelo
