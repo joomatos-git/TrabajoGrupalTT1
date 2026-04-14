@@ -31,25 +31,69 @@ Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la ge
 
 ## Gestión de roles
 
-Los roles rotan cada semana. **No se puede repetir el mismo rol en semanas consecutivas** para la misma persona.
+## Gestión de roles
 
-| Semana | Desarrollador | Organizador / Tester |
-|--------|--------------|----------------------|
-| Semana 1 | Joseba | Alicia (Organizadora) |
-| Semana 2 | Alicia | Joseba (Tester) |
-| Semana 3 | Joseba | Alicia (Tester) |
-| Semana 4 | Alicia | Joseba (Tester) |
-| Semana 5 | Joseba | Alicia |
+Los roles rotan cada sprint. Siempre hay un Desarrollador y un rol de soporte distinto. Ningún rol de soporte puede repetirse en todo el proyecto.
 
-## Planificación
+| Sprint | Desarrollador | Rol de soporte |
+|--------|--------------|----------------|
+| Sprint 0 | Joseba | Alicia (Organizadora) |
+| Sprint 1 | Alicia | Joseba (Tester) |
+| Sprint 2 | Alicia | Joseba (Revisor) |
+| Sprint 3 | Joseba | Alicia (Analista) |
+| Sprint 4 | Joseba | Alicia (QA) |
+| Sprint 5 | Alicia | Joseba (Scrum Master) |
+| Sprint 6 | Joseba | Alicia (Documentadora) |
+
+## Planificación por sprints
+
+| Sprint | Objetivo principal |
+|--------|--------------------|
+| **Sprint 0** | Configuración del entorno, Kanban, decisiones tecnológicas |
+| **Sprint 1** | Estructura API REST, migración Maven, revisión de tests |
+| **Sprint 2** | Implementación bichitos, arreglo tests unitarios, ServiceImpl con lógica real |
+| **Sprint 3** | GridLogic (initialize + avanzarInstante), resolución de conflictos |
+| **Sprint 4** | Tests de integración, gestión de errores en la API |
+| **Sprint 5** | Javadoc, revisión general del código |
+| **Sprint 6** | Documentación final, manual de usuario, entrega |
+
+## Sprints
 
 ### Sprint 0
 
-- [ ] Configuración del tablero **Kanban en GitHub**
-- [ ] Decisión tecnológica: se usará **Java** (para minimizar formación adicional)
-- [ ] Configuración del **IDE** y primeras pruebas del entorno
-- [ ] Reunión con el cliente (Javi) para resolución de dudas sobre requisitos
-- [ ] Primera distribución de tareas entre los miembros del equipo
+- Configuración del tablero **Kanban en GitHub**
+- Decisión tecnológica: se usará **Java** (para minimizar formación adicional)
+- Configuración del **IDE** y primeras pruebas del entorno
+- Reunión con el cliente (Javi) para resolución de dudas sobre requisitos
+- Primera distribución de tareas entre los miembros del equipo
+
+### Sprint 1
+
+**Alicia (Desarrolladora)**
+
+- Aprendizaje y documentación del funcionamiento de una API REST con Spring Boot: estructura de controllers, servicios e interfaces, inyección de dependencias y manejo de peticiones HTTP.
+- Migración del proyecto a Maven con `pom.xml` configurado para Spring Boot.
+- Diseño e implementación de la capa API REST en el paquete `Sistema.API`:
+    - `ISimulacionService`: interfaz que define el contrato del servicio (métodos `iniciarSimulacion` y `getEstado`).
+    - `SimulacionServiceImpl`: implementación del servicio con gestión de sesiones mediante tokens UUID.
+    - `SimulacionController`: controller REST con los endpoints `POST /simulacion/iniciar` y `GET /simulacion/estado`.
+    - `ConfiguracionDTO`: objeto de transferencia para recibir la configuración inicial (filas, columnas, número de criaturas por tipo).
+    - `EstadoTableroDTO`: objeto de transferencia para devolver el estado del tablero en un instante dado.
+    - `RestApplication`: clase principal que arranca el servidor Spring Boot.
+
+Joseba
+
+Tests. No estan bien ninguno.
+
+De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
+
+
+**Ambos**
+
+- Puesta en común de dudas e ideas sobre el diseño del sistema: flujo de la simulación, estructura de paquetes, reparto de responsabilidades entre capas y criterios de resolución de conflictos.
+- De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
+
+
 
 ## Estrategia de pruebas
 
@@ -60,23 +104,9 @@ El proyecto está orientado a **tests**, con cobertura de:
 
 ## Tecnologías
 
-- **Lenguaje**: Java
+- **Lenguaje**: Java 17
+- **Framework**: Spring Boot 3.2.4
+- **Gestión de dependencias**: Maven
 - **Gestión de proyecto**: GitHub Projects (Kanban)
 - **Metodología**: Scrum / Kanban con sprints semanales
 
-## Sprint 1
-
-Alicia 
-
-El paquete servicio es el paquete que va a gestionar los bichitos
-Vamos a pasar nuestro proyecto a uno maven, para eso lo vamos a hacer manualmente, creo el pom
-Tenemos proyecto maven
-En la carpeta Sistema.API creo las clases:
-A ver, he estado leyendo documentación pero no estaba entendiendo. Le doy la vuelta primero creo las interfaces para luego con el controller trabajar con ellas.
-Un API spring Boot que es lkoq eu voy a hacer se basa en: La parte del trabajo individiual->Controller->Modelo
-
-Joseba
-
-Tests. No estan bien ninguno. 
-
-De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
