@@ -109,4 +109,3 @@ El proyecto está orientado a **tests**, con cobertura de:
 - **Gestión de dependencias**: Maven
 - **Gestión de proyecto**: GitHub Projects (Kanban)
 - **Metodología**: Scrum / Kanban con sprints semanales
-
