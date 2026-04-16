@@ -5,4 +5,14 @@ public class BichitoQuieto implements BichitoInterface {
     public BichitoQuieto(Posicion p){
         posicion=p;
     }
+
+    @Override
+    public Posicion getPosicion() {
+        return null;
+    }
+
+    @Override
+    public void setPosicion(Posicion p) {
+
+    }
 }

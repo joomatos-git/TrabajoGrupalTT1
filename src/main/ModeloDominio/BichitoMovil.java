@@ -5,4 +5,14 @@ public class BichitoMovil implements BichitoInterface {
     public BichitoMovil(Posicion p){
         posicion=p;
     }
+
+    @Override
+    public Posicion getPosicion() {
+        return null;
+    }
+
+    @Override
+    public void setPosicion(Posicion p) {
+
+    }
 }

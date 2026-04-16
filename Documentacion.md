@@ -81,17 +81,16 @@ Los roles rotan cada sprint. Siempre hay un Desarrollador y un rol de soporte di
     - `EstadoTableroDTO`: objeto de transferencia para devolver el estado del tablero en un instante dado.
     - `RestApplication`: clase principal que arranca el servidor Spring Boot.
 
-Joseba
+**Joseba (Tester)**
 
-Tests. No estan bien ninguno.
-
-De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
-
+- Creación de tests de funcionamiento de cada tipo de criatura.
+- Creación de test para la generación del grid inicial, tanto con setSeed como sin ella.
+- Lógica del grid diseñada como Placeholder temporal.
 
 **Ambos**
 
 - Puesta en común de dudas e ideas sobre el diseño del sistema: flujo de la simulación, estructura de paquetes, reparto de responsabilidades entre capas y criterios de resolución de conflictos.
-- De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve. Para los steps tambien y tal I guess.
+- De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve.
 
 
 
