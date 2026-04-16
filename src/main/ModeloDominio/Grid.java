@@ -5,15 +5,12 @@ public class Grid {
     private final int cols = 10;
     private int[][] matrix;
 
-    public Grid(){
-        matrix = new Object[rows][cols];
-    }
 
-    public Object[][] getMatrix(){
+    public int[][] getMatrix(){
         return matrix;
     }
 
-    public void setMatrix(Object[][] m){
+    public void setMatrix(int[][] m){
         matrix=m;
     }
 

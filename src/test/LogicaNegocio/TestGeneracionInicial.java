@@ -2,6 +2,7 @@ package test.LogicaNegocio;
 
 import main.LogicaNegocio.GridLogic;
 import main.ModeloDominio.Grid;
+import org.junit.Test;
 import org.junit.jupiter.api.*;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,7 @@ public class TestGeneracionInicial {
     }
 
     @Test
-    void testComprobarIguales() {
+    public void testComprobarIguales() {
         int seed = 84;
 
         grid1.initialize(seed);
@@ -37,7 +38,7 @@ public class TestGeneracionInicial {
 
 
     @Test
-    void testComprobarDistintos() {
+    public void testComprobarDistintos() {
         grid1.initialize();
         grid2.initialize();
 

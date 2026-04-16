@@ -1,7 +1,7 @@
 package main.ModeloDominio;
 
 public interface BichitoInterface {
-    public Posicion pos = null;
-    
+    Posicion getPosicion();
+    void setPosicion(Posicion p);
 }
 

@@ -4,6 +4,7 @@ import main.LogicaNegocio.GridLogic;
 import main.ModeloDominio.BichitoInterface;
 import main.ModeloDominio.BichitoQuieto;
 import main.ModeloDominio.Grid;
+import main.ModeloDominio.Posicion;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ public class TestQuieto {
     @BeforeEach
     void setUp() {
         grid1 = new GridLogic();
+        grid1.initialize();
+        for(int n=1; n<50; n++){
+            grid1.step();
+        }
     }
 
     @AfterEach
@@ -29,31 +34,28 @@ public class TestQuieto {
     @Test
     void testComprobarInmoviles() {
         List<BichitoQuieto> listaEspecifica = new ArrayList<BichitoQuieto>();
-        List<BichitoInterface> listaGeneral = grid1.getBichitos();
-        List<int[]> posiciones = new ArrayList<int[]>();
-        for(BichitoInterface b: listaGeneral){
+        List<List<BichitoInterface>> listaGeneral = grid1.getBichitosTiempo();
+        List<Posicion> posicionesPre = new ArrayList<Posicion>();
+        List<Posicion> posicionesPost = new ArrayList<Posicion>();
+        for(BichitoInterface b: listaGeneral.get(0)){
             if(b instanceof BichitoQuieto bq){
                 listaEspecifica.add(bq);
-                posiciones.add(bq.getPos());
+                posicionesPre.add(bq.getPosicion());
             }
         }
-        for(int n = 0; n<50; n++){
-            grid1.avanzarTurno();
-        }
-        listaEspecifica = new ArrayList<BichitoQuieto>();
-        listaGeneral = grid1.getBichitos();
-        List<int[]> posicionesAfter = new ArrayList<int[]>();
-        for(BichitoInterface b: listaGeneral){
-            if(b instanceof BichitoQuieto bq){
-                listaEspecifica.add(bq);
-                posicionesAfter.add(bq.getPos());
+        for(int n = 1; n<50; n++){
+            for(BichitoInterface b: listaGeneral.get(n)){
+                if(b instanceof BichitoQuieto bq){
+                    listaEspecifica.add(bq);
+                    posicionesPost.add(bq.getPosicion());
+                }
             }
+            for (int i = 0; i < posicionesPre.size(); i++) {
+                assertEquals(posicionesPost.get(i), posicionesPre.get(i));
+            }
+            posicionesPre = posicionesPost;
         }
-
-        for (int i = 0; i < posiciones.size(); i++) {
-            assertTrue(Arrays.equals(posiciones.get(i), posicionesAfter.get(i)),
-                    "La posición en el índice " + i + " ha cambiado");
-        }    }
+    }
 
 
 
