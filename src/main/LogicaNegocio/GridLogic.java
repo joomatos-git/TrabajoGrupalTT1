@@ -15,6 +15,7 @@ public class GridLogic {
     }
 
     public void initialize(){
+        bichitosTiempo.add(new ArrayList<>());
         Random r = new Random();
         grid = new Grid();
         for (int row = 0; row < grid.getMatrix().length; row++) {
@@ -46,6 +47,7 @@ public class GridLogic {
 
 
     public void initialize(int seed){
+        bichitosTiempo.add(new ArrayList<>());
         Random r = new Random(seed);
         grid = new Grid();
         for (int row = 0; row < grid.getMatrix().length; row++) {

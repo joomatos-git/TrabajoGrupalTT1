@@ -8,11 +8,11 @@ public class BichitoMovil implements BichitoInterface {
 
     @Override
     public Posicion getPosicion() {
-        return null;
+        return posicion;
     }
 
     @Override
     public void setPosicion(Posicion p) {
-
+        this.posicion = p;
     }
 }

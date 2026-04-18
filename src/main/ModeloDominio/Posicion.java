@@ -8,9 +8,10 @@ public class Posicion {
         this.x = x;
         this.y = y;
     }
-
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if (!(obj instanceof Posicion other)) return false;
+        return this.x == other.x && this.y == other.y;
     }
 }

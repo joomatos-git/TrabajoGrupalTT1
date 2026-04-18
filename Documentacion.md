@@ -33,22 +33,22 @@ Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la ge
 
 ## Gestión de roles
 
-Los roles rotan cada sprint. Siempre hay un Desarrollador y un rol de soporte distinto. Ningún rol de soporte puede repetirse en todo el proyecto.
+Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los otros dos miembros asumen roles de soporte, sin que ningún rol de soporte se repita para la misma persona en todo el proyecto. Raul se incorpora al equipo en el Sprint 2.
 
-| Sprint | Desarrollador | Rol de soporte |
-|--------|--------------|----------------|
-| Sprint 0 | Joseba | Alicia (Organizadora) |
-| Sprint 1 | Alicia | Joseba (Tester) |
-| Sprint 2 | Alicia | Joseba (Revisor) |
-| Sprint 3 | Joseba | Alicia (Analista) |
-| Sprint 4 | Joseba | Alicia (QA) |
-| Sprint 5 | Alicia | Joseba (Scrum Master) |
-| Sprint 6 | Joseba | Alicia (Documentadora) |
+| Sprint | Desarrollador | Rol de soporte | Rol de soporte |
+|--------|--------------|----------------|----------------|
+| Sprint 0 | Joseba | Alicia (Organizadora) | — |
+| Sprint 1 | Alicia | Joseba (Tester) | — |
+| Sprint 2 | Raul | Joseba (Revisor) | Alicia (Analista) |
+| Sprint 3 | Joseba | Alicia (QA) | Raul (Scrum Master) |
+| Sprint 4 | Alicia | Raul (Documentador) | Joseba (Arquitecto) |
+| Sprint 5 | Raul | Joseba (DevOps) | Alicia (Tester de integración) |
+| Sprint 6 | Joseba | Alicia (Gestora de entrega) | Raul (Revisor final) |
 
 ## Planificación por sprints
 
 | Sprint | Objetivo principal |
-|--------|--------------------|
+|--------|-------------------|
 | **Sprint 0** | Configuración del entorno, Kanban, decisiones tecnológicas |
 | **Sprint 1** | Estructura API REST, migración Maven, revisión de tests |
 | **Sprint 2** | Implementación bichitos, arreglo tests unitarios, ServiceImpl con lógica real |

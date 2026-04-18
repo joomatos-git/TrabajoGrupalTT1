@@ -5,14 +5,13 @@ public class BichitoMitosis implements BichitoInterface {
     public BichitoMitosis(Posicion p){
         posicion=p;
     }
-
     @Override
     public Posicion getPosicion() {
-        return null;
+        return posicion;
     }
 
     @Override
     public void setPosicion(Posicion p) {
-
+        this.posicion = p;
     }
 }
