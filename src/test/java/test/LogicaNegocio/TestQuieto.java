@@ -53,6 +53,21 @@ public class TestQuieto {
             }
             assertEquals(posicionesIniciales.size(), posicionesEnN.size(),
                     "El número de BichitoQuieto no debe cambiar en el instante " + n);
+
+            posicionesIniciales.sort((p1, p2) -> {
+                if (p1.x != p2.x) {
+                    return Integer.compare(p1.x, p2.x);
+                }
+                return Integer.compare(p1.y, p2.y);
+            });
+
+            posicionesEnN.sort((p1, p2) -> {
+                if (p1.x != p2.x) {
+                    return Integer.compare(p1.x, p2.x);
+                }
+                return Integer.compare(p1.y, p2.y);
+            });
+
             for (int i = 0; i < posicionesIniciales.size(); i++) {
                 assertEquals(posicionesIniciales.get(i), posicionesEnN.get(i),
                         "BichitoQuieto " + i + " se movió en el instante " + n);
