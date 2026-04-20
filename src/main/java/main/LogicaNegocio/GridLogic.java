@@ -4,6 +4,7 @@ import main.ModeloDominio.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class GridLogic {
@@ -191,4 +192,13 @@ public class GridLogic {
         }
         return libres;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GridLogic other)) return false;
+        return Objects.equals(this.bichitosTiempo, other.bichitosTiempo);
+    }
+
 }
