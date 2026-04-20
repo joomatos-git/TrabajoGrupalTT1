@@ -3,11 +3,9 @@ package main.ModeloDominio;
 import java.util.Arrays;
 
 public class Grid {
-    private final int rows = 10;
-    private final int cols = 10;
     private int[][] matrix;
-    public Grid() {
-        this.matrix = new int[rows][cols];
+    public Grid(int row, int col) {
+        this.matrix = new int[row][col];
     }
     public int[][] getMatrix(){
         return matrix;

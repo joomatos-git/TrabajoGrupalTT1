@@ -22,7 +22,7 @@ public class SimulacionServiceImpl implements ISimulacionService {
         Random r = new Random();
         int seed = r.nextInt();
         System.out.println(seed);
-        GridLogic grid = new GridLogic(seed);
+        GridLogic grid = new GridLogic(seed, configuracion.getFilas(), configuracion.getColumnas());
 
 
         // Avanzamos 50 turnos (o los que quieras)

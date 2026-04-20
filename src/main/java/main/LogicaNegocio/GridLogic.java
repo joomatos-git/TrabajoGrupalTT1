@@ -12,10 +12,22 @@ public class GridLogic {
     List<List<BichitoInterface>> bichitosTiempo;
 
     public GridLogic(){
+        grid = new Grid(10,10);
+        initialize();
+    }
+
+    public GridLogic(int row, int col){
+        grid = new Grid(row, col);
         initialize();
     }
 
     public GridLogic(int seed){
+        grid = new Grid(10, 10);
+        initialize(seed);
+    }
+
+    public GridLogic(int seed, int row, int col){
+        grid = new Grid(row, col);
         initialize(seed);
     }
 
@@ -23,7 +35,6 @@ public class GridLogic {
         bichitosTiempo = new ArrayList<List<BichitoInterface>>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random();
-        grid = new Grid();
         for (int row = 0; row < grid.getMatrix().length; row++) {
             for (int col = 0; col < grid.getMatrix()[row].length; col++) {
 
@@ -56,7 +67,6 @@ public class GridLogic {
         bichitosTiempo = new ArrayList<List<BichitoInterface>>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random(seed);
-        grid = new Grid();
         for (int row = 0; row < grid.getMatrix().length; row++) {
             for (int col = 0; col < grid.getMatrix()[row].length; col++) {
 
