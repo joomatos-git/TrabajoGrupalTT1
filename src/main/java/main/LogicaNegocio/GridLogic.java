@@ -52,7 +52,7 @@ public class GridLogic {
     }
 
 
-    private void initialize(int seed){
+    public void initialize(int seed){
         bichitosTiempo = new ArrayList<List<BichitoInterface>>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random(seed);
