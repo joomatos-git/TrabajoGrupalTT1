@@ -16,8 +16,7 @@ public class TestGeneracionInicial {
 
     @BeforeEach
     void setUp() {
-        grid1 = new GridLogic();
-        grid2 = new GridLogic();
+
     }
 
     @AfterEach
@@ -30,8 +29,8 @@ public class TestGeneracionInicial {
     @Test
     void testMismaSemilla_mismaCantidadDeBichitos() {
         int seed = 84;
-        grid1.initialize(seed);
-        grid2.initialize(seed);
+        grid1=new GridLogic(seed);
+        grid2=new GridLogic(seed);
 
         List<BichitoInterface> lista1 = grid1.getBichitosTiempo().get(0);
         List<BichitoInterface> lista2 = grid2.getBichitosTiempo().get(0);
@@ -44,8 +43,9 @@ public class TestGeneracionInicial {
     @Test
     void testMismaSemilla_mismasPosiciones() {
         int seed = 84;
-        grid1.initialize(seed);
-        grid2.initialize(seed);
+        grid1=new GridLogic(seed);
+        grid2=new GridLogic(seed);
+
 
         List<BichitoInterface> lista1 = grid1.getBichitosTiempo().get(0);
         List<BichitoInterface> lista2 = grid2.getBichitosTiempo().get(0);
@@ -60,8 +60,8 @@ public class TestGeneracionInicial {
     @Test
     void testMismaSemilla_mismosTipos() {
         int seed = 84;
-        grid1.initialize(seed);
-        grid2.initialize(seed);
+        grid1=new GridLogic(seed);
+        grid2=new GridLogic(seed);
 
         List<BichitoInterface> lista1 = grid1.getBichitosTiempo().get(0);
         List<BichitoInterface> lista2 = grid2.getBichitosTiempo().get(0);
@@ -75,8 +75,8 @@ public class TestGeneracionInicial {
 
     @Test
     void testSemillasDistintas_cantidadesDistintas() {
-        grid1.initialize(1);
-        grid2.initialize(999999);
+        grid1=new GridLogic(1);
+        grid2=new GridLogic(999999);
 
         int size1 = grid1.getBichitosTiempo().get(0).size();
         int size2 = grid2.getBichitosTiempo().get(0).size();
@@ -88,7 +88,7 @@ public class TestGeneracionInicial {
 
     @Test
     void testInicializar_generaExactamenteUnaGeneracion() {
-        grid1.initialize(42);
+        grid1=new GridLogic(42);
         assertEquals(1, grid1.getBichitosTiempo().size(),
                 "Tras initialize debe existir exactamente 1 instante de tiempo");
     }
@@ -96,7 +96,7 @@ public class TestGeneracionInicial {
 
     @Test
     void testInicializar_todosBichitosEnRangos() {
-        grid1.initialize(42);
+        grid1=new GridLogic(42);
         for (BichitoInterface b : grid1.getBichitosTiempo().get(0)) {
             int x = b.getPosicion().x;
             int y = b.getPosicion().y;
@@ -108,7 +108,7 @@ public class TestGeneracionInicial {
 
     @Test
     void testInicializar_sinColisionesIniciales() {
-        grid1.initialize(42);
+        grid1=new GridLogic(42);
         List<BichitoInterface> lista = grid1.getBichitosTiempo().get(0);
         for (int i = 0; i < lista.size(); i++) {
             for (int j = i + 1; j < lista.size(); j++) {
@@ -123,7 +123,7 @@ public class TestGeneracionInicial {
      */
     @Test
     void testTeardown_limpiaLista() {
-        grid1.initialize(42);
+        grid1=new GridLogic(42);
         grid1.teardown();
         assertEquals(0, grid1.getBichitosTiempo().size(),
                 "Tras teardown, bichitosTiempo debe estar vacío");

@@ -18,8 +18,7 @@ public class TestQuieto {
 
     @BeforeEach
     void setUp() {
-        grid1 = new GridLogic();
-        grid1.initialize(42);
+        grid1 = new GridLogic(42);
         for (int n = 0; n < 10; n++) {
             grid1.step();
         }

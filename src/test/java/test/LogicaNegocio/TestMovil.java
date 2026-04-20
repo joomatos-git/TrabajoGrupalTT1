@@ -21,7 +21,6 @@ public class TestMovil {
     @BeforeEach
     void setUp() {
         grid1 = new GridLogic();
-        grid1.initialize();
         for (int n = 1; n < 50; n++) {
             grid1.step();
         }

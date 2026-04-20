@@ -1,49 +1,72 @@
 package Sistema.API;
 
+import main.LogicaNegocio.GridLogic;
+import main.ModeloDominio.BichitoInterface;
+import main.ModeloDominio.BichitoMitosis;
+import main.ModeloDominio.BichitoMovil;
+import main.ModeloDominio.BichitoQuieto;
+import main.ModeloDominio.Grid;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
-@Service  // Le dice a Spring que esta clase es un servicio y la gestiona él
+import java.util.*;
+
+@Service
 public class SimulacionServiceImpl implements ISimulacionService {
 
-    // Aquí guardamos las simulaciones activas
-    // La clave es el token, el valor es la configuración de esa simulación
-    private Map<String, ConfiguracionDTO> simulaciones = new HashMap<>();
+    // Ahora guardamos el GridLogic completo, no solo la config
+    private Map<String, GridLogic> simulaciones = new HashMap<>();
 
     @Override
     public String iniciarSimulacion(ConfiguracionDTO configuracion) {
-        // Generamos un token único para esta simulación
         String token = UUID.randomUUID().toString();
+        Random r = new Random();
+        int seed = r.nextInt();
+        System.out.println(seed);
+        GridLogic grid = new GridLogic(seed);
 
-        // Guardamos la configuración asociada a ese token
-        simulaciones.put(token, configuracion);
 
+        // Avanzamos 50 turnos (o los que quieras)
+        for (int i = 0; i < 50; i++) {
+            grid.step();
+        }
+
+        simulaciones.put(token, grid);
         return token;
     }
 
     @Override
     public EstadoTableroDTO getEstado(String token, int instante) {
-        // Comprobamos que el token existe
         if (!simulaciones.containsKey(token)) {
-            return null; // El controller gestionará este caso devolviendo un error
+            return null;
         }
 
-        ConfiguracionDTO config = simulaciones.get(token);
+        GridLogic grid = simulaciones.get(token);
+        List<List<BichitoInterface>> historia = grid.getBichitosTiempo();
 
-        // De momento devolvemos un tablero de prueba vacío con el tamaño correcto
-        // Cuando GridLogic esté lista, aquí llamarás a la lógica real
-        String[][] tablero = new String[config.getFilas()][config.getColumnas()];
-
-        // Ponemos algunos bichitos de prueba para ver que funciona
-        if (config.getFilas() > 0 && config.getColumnas() > 0) {
-            tablero[0][0] = "QUIETO";
-        }
-        if (config.getFilas() > 1 && config.getColumnas() > 1) {
-            tablero[1][1] = "MOVIL";
+        // Comprobamos que el instante pedido existe
+        if (instante < 0 || instante >= historia.size()) {
+            return null;
         }
 
-        return new EstadoTableroDTO(instante, tablero, false);
+        int filas = grid.getGrid().getMatrix().length;
+        int columnas = grid.getGrid().getMatrix()[0].length;
+        String[][] tablero = new String[filas][columnas]; // null = vacío por defecto
+
+        // Rellenamos el tablero con los bichitos del instante pedido
+        for (BichitoInterface b : historia.get(instante)) {
+            int x = b.getPosicion().x;
+            int y = b.getPosicion().y;
+
+            if (b instanceof BichitoQuieto) {
+                tablero[x][y] = "QUIETO";
+            } else if (b instanceof BichitoMovil) {
+                tablero[x][y] = "MOVIL";
+            } else if (b instanceof BichitoMitosis) {
+                tablero[x][y] = "MITOSIS";
+            }
+        }
+
+        boolean terminada = historia.size() >= 51;
+        return new EstadoTableroDTO(instante, tablero, terminada);
     }
 }

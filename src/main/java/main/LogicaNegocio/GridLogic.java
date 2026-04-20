@@ -9,13 +9,18 @@ import java.util.Random;
 
 public class GridLogic {
     Grid grid;
-    List<List<BichitoInterface>> bichitosTiempo = new ArrayList<List<BichitoInterface>>();
+    List<List<BichitoInterface>> bichitosTiempo;
 
     public GridLogic(){
-
+        initialize();
     }
 
-    public void initialize(){
+    public GridLogic(int seed){
+        initialize(seed);
+    }
+
+    private void initialize(){
+        bichitosTiempo = new ArrayList<List<BichitoInterface>>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random();
         grid = new Grid();
@@ -47,36 +52,42 @@ public class GridLogic {
     }
 
 
-    public void initialize(int seed){
+    private void initialize(int seed){
+        bichitosTiempo = new ArrayList<List<BichitoInterface>>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random(seed);
         grid = new Grid();
         for (int row = 0; row < grid.getMatrix().length; row++) {
             for (int col = 0; col < grid.getMatrix()[row].length; col++) {
 
-                if (r.nextInt(6) == 0) {
-                    switch (r.nextInt(3)) {
-                        case 0:
+                if (r.nextInt(6) < 2) {
+                    switch (r.nextInt(6)) {
+                        case (0):
+                        case (1):
+                        case (2):
                             bichitosTiempo.get(0).add(
-                                    new BichitoMitosis(new Posicion(row, col))
+                                    new BichitoQuieto(new Posicion(row, col))
                             );
                             break;
-                        case 1:
+                        case 3:
+                        case 4:
                             bichitosTiempo.get(0).add(
                                     new BichitoMovil(new Posicion(row, col))
                             );
                             break;
-                        case 2:
+                        case 5:
                             bichitosTiempo.get(0).add(
-                                    new BichitoQuieto(new Posicion(row, col))
+                                    new BichitoMitosis(new Posicion(row, col))
                             );
                             break;
                     }
                 }
             }
         }
-
     }
+
+
+
 
     //para avanzar "turnos"
     public void step(){
