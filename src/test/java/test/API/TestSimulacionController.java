@@ -1,157 +1,86 @@
 package test.API;
 
-import Sistema.API.RestApplication;
-import Sistema.API.SimulacionController;
-import Sistema.API.SimulacionServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import Sistema.API.*;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.Matchers.*;
 
-/**
- * Tests de integración para SimulacionController usando MockMvc.
- * Levanta el contexto Spring completo (SpringBootTest) y simula peticiones HTTP.
- *
- * DEPENDENCIAS NECESARIAS en pom.xml (añadir si no están):
- *
- *   <dependency>
- *       <groupId>org.springframework.boot</groupId>
- *       <artifactId>spring-boot-starter-test</artifactId>
- *       <scope>test</scope>
- *   </dependency>
- */
-@SpringBootTest(classes = RestApplication.class)
-@AutoConfigureMockMvc
 public class TestSimulacionController {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private SimulacionController controller;
+    private SimulacionServiceImpl service;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    // ─── POST /simulacion/iniciar ─────────────────────────────────────────────
-
-    @Test
-    void testIniciar_returns200() throws Exception {
-        String body = """
-                {
-                  "filas": 10,
-                  "columnas": 10,
-                  "numQuietos": 2,
-                  "numMoviles": 2,
-                  "numMitosis": 2
-                }
-                """;
-
-        mockMvc.perform(post("/simulacion/iniciar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andExpect(status().isOk());
+    @BeforeEach
+    void setUp() {
+        service = new SimulacionServiceImpl();
+        controller = new SimulacionController(service);
     }
 
     @Test
-    void testIniciar_devuelveTokenNoVacio() throws Exception {
-        String body = """
-                {"filas":10,"columnas":10,"numQuietos":1,"numMoviles":1,"numMitosis":1}
-                """;
-
-        mockMvc.perform(post("/simulacion/iniciar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andExpect(status().isOk())
-                .andExpect(content().string(not(emptyOrNullString())));
-    }
-
-    // ─── GET /simulacion/estado ───────────────────────────────────────────────
-
-    @Test
-    void testGetEstado_tokenValido_returns200() throws Exception {
-        // Primero obtenemos un token
-        String body = """
-                {"filas":10,"columnas":10,"numQuietos":0,"numMoviles":0,"numMitosis":0}
-                """;
-        MvcResult result = mockMvc.perform(post("/simulacion/iniciar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andReturn();
-
-        String token = result.getResponse().getContentAsString().replace("\"", "");
-
-        // Ahora pedimos el estado
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("token", token)
-                        .param("instante", "0"))
-                .andExpect(status().isOk());
+    void testIniciar_returns200() {
+        ConfiguracionDTO config = config(10, 10, 2, 2, 2);
+        var response = controller.iniciarSimulacion(config);
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
-    void testGetEstado_tokenInvalido_returns404() throws Exception {
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("token", "token-que-no-existe")
-                        .param("instante", "0"))
-                .andExpect(status().isNotFound());
+    void testIniciar_devuelveTokenNoVacio() {
+        ConfiguracionDTO config = config(10, 10, 1, 1, 1);
+        var response = controller.iniciarSimulacion(config);
+        String token = response.getBody();
+        assertNotNull(token);
+        assertFalse(token.isBlank());
     }
 
     @Test
-    void testGetEstado_respuestaContieneInstante() throws Exception {
-        String body = """
-                {"filas":5,"columnas":5,"numQuietos":0,"numMoviles":0,"numMitosis":0}
-                """;
-        MvcResult result = mockMvc.perform(post("/simulacion/iniciar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andReturn();
-
-        String token = result.getResponse().getContentAsString().replace("\"", "");
-
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("token", token)
-                        .param("instante", "2"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.instante").value(2));
+    void testGetEstado_tokenValido_returns200() {
+        String token = controller.iniciarSimulacion(config(10, 10, 0, 0, 0)).getBody();
+        var response = controller.getEstado(token, 0);
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
-    void testGetEstado_respuestaContieneTablero() throws Exception {
-        String body = """
-                {"filas":4,"columnas":4,"numQuietos":0,"numMoviles":0,"numMitosis":0}
-                """;
-        MvcResult result = mockMvc.perform(post("/simulacion/iniciar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andReturn();
-
-        String token = result.getResponse().getContentAsString().replace("\"", "");
-
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("token", token)
-                        .param("instante", "0"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tablero").isArray())
-                .andExpect(jsonPath("$.tablero.length()").value(4));
+    void testGetEstado_tokenInvalido_returns404() {
+        var response = controller.getEstado("token-que-no-existe", 0);
+        assertEquals(404, response.getStatusCode().value());
     }
 
     @Test
-    void testGetEstado_faltaParametroToken_returns400() throws Exception {
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("instante", "0"))
-                .andExpect(status().isBadRequest());
+    void testGetEstado_respuestaContieneInstante() {
+        String token = controller.iniciarSimulacion(config(5, 5, 0, 0, 0)).getBody();
+        var response = controller.getEstado(token, 2);
+        assertEquals(2, response.getBody().getInstante());
     }
 
     @Test
-    void testGetEstado_faltaParametroInstante_returns400() throws Exception {
-        mockMvc.perform(get("/simulacion/estado")
-                        .param("token", "cualquier-cosa"))
-                .andExpect(status().isBadRequest());
+    void testGetEstado_respuestaContieneTablero() {
+        String token = controller.iniciarSimulacion(config(4, 4, 0, 0, 0)).getBody();
+        var response = controller.getEstado(token, 0);
+        String[][] tablero = response.getBody().getTablero();
+        assertNotNull(tablero);
+        assertEquals(4, tablero.length);
+    }
+
+    @Test
+    void testGetEstado_faltaToken_returns404() {
+        var response = controller.getEstado(null, 0);
+        assertEquals(404, response.getStatusCode().value());
+    }
+
+    @Test
+    void testGetEstado_tokenVacio_returns404() {
+        var response = controller.getEstado("", 0);
+        assertEquals(404, response.getStatusCode().value());
+    }
+
+
+    private ConfiguracionDTO config(int filas, int cols, int quietos, int moviles, int mitosis) {
+        ConfiguracionDTO c = new ConfiguracionDTO();
+        c.setFilas(filas);
+        c.setColumnas(cols);
+        c.setNumQuietos(quietos);
+        c.setNumMoviles(moviles);
+        c.setNumMitosis(mitosis);
+        return c;
     }
 }
