@@ -92,6 +92,15 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - Puesta en común de dudas e ideas sobre el diseño del sistema: flujo de la simulación, estructura de paquetes, reparto de responsabilidades entre capas y criterios de resolución de conflictos.
 - De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve.
 
+### Sprint 2
+**Alicia (Analista)**
+- Creación de nuevos tests en el paquete `LogicaNegocio`:
+    - `TestBichitos.java`: tests de comportamiento básico de cada tipo de criatura.
+    - `TestGeneracionInicial.java`: validación de la generación del grid inicial con y sin semilla (`setSeed`).
+    - `TestGrid.java`: tests sobre la estructura y estado del grid.
+    - `TestGridLogicStep.java`: tests del avance de instante (`step`), incluyendo casos de movimiento, mitosis y resolución de conflictos.
+    - `TestPosicion.java`: tests de la lógica de posicionamiento de criaturas en el grid.
+- Revisión de los tests ya existentes con ayuda de Joseba, verificando coherencia de casos de prueba y cobertura de escenarios límite.
 
 
 ## Estrategia de pruebas
