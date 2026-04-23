@@ -94,7 +94,7 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 
 ### Sprint 2
 
-**Ambos**
+**Todos**
 
 - Puesta al día de Raúl que se acababa de unir al proyecto, explicando el proyecto en general, metodología de trabajo...
 - Puesta en común de dudas e ideas sobre el diseño del sistema, sobre todo debido a la nueva incorporación.
