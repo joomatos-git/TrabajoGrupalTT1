@@ -93,6 +93,12 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - De cara a la implementación del grid. Lista de listas de bichos. Cada lista por un instante de tiempo. Devuelve lista de listas, poblar grid con todo eso. Pregunta bicho por bicho donde está y lo mueve.
 
 ### Sprint 2
+
+**Ambos**
+
+- Puesta al día de Raúl que se acababa de unir al proyecto, explicando el proyecto en general, metodología de trabajo...
+- Puesta en común de dudas e ideas sobre el diseño del sistema, sobre todo debido a la nueva incorporación.
+  
 **Alicia (Analista)**
 - Creación de nuevos tests en el paquete `LogicaNegocio`:
     - `TestBichitos.java`: tests de comportamiento básico de cada tipo de criatura.
@@ -102,6 +108,14 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
     - `TestPosicion.java`: tests de la lógica de posicionamiento de criaturas en el grid.
 - Revisión de los tests ya existentes con ayuda de Joseba, verificando coherencia de casos de prueba y cobertura de escenarios límite.
 
+**Raúl (Desarrollador)**
+- Reestructuración de la arquitectura Maven, reorganizando en los directorios fuente del proyecto (src/main/java y src/test/java) para cumplir estrictamente con el estándar oficial de Maven y Spring Boot, resolviendo problemas de detección de código y garantizando la compatibilidad total entre diferentes IDEs.
+- Desarrollo del método central step() en GridLogic.java para gestionar el avance temporal del sistema.
+- Implementación de un sistema de ordenación por prioridad antes de procesar cualquier acción, asegurando que las criaturas en filas superiores y, en caso de empate, las situadas más a la derecha, tengan preferencia para ocupar casillas.
+- Diseño de un flujo de ejecución en dos etapas para garantizar la integridad del tablero:
+    - 1º: Se reservan las posiciones de las criaturas que no se desplazan (Quieto y la célula "madre" de Mitosis), marcando sus casillas como ocupadas en el nuevo instante.
+    - 2º: Se procesan los movimientos de las criaturas Móvil y las nuevas copias de Mitosis hacia las celdas que han quedado libres.
+- Creación del método helper *obtenerAdyacentesLibres*, que encapsula la lógica de detección de celdas vacías en las cuatro direcciones, verificando siempre los límites de la cuadrícula y la disponibilidad de la celda.
 
 ## Estrategia de pruebas
 
