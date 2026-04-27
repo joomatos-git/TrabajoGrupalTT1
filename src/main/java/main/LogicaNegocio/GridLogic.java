@@ -10,6 +10,7 @@ import java.util.Random;
 public class GridLogic {
     Grid grid;
     List<List<BichitoInterface>> bichitosTiempo;
+    int roundsStuck=0;
 
     public GridLogic(){
         grid = new Grid(10,10);
@@ -101,6 +102,9 @@ public class GridLogic {
 
     //para avanzar "turnos"
     public void step(){
+        // Asumo estado de "atascado" al principio. Si al final del step no ha cambiado es que está atascado (o que ha habido mala suerte)
+        boolean stuck=true;
+
         // Si no hay estado inicial, no podemos avanzar
         if (bichitosTiempo.isEmpty()) return;
 
@@ -148,11 +152,12 @@ public class GridLogic {
 
             if (bicho instanceof BichitoMovil) {
                 List<Posicion> libres = obtenerAdyacentesLibres(pos, casillasOcupadas, filas, columnas);
-                if (!libres.isEmpty()) {
+                if (!libres.isEmpty()&&r.nextInt(2)==0) {
                     // Se mueve a una adyacente libre aleatoria
                     Posicion nuevaPos = libres.get(r.nextInt(libres.size()));
                     genNueva.add(new BichitoMovil(nuevaPos));
                     casillasOcupadas[nuevaPos.x][nuevaPos.y] = true;
+                    stuck=false;
                 } else {
                     // Si está acorralado, se queda en su sitio (si nadie se lo ha quitado)
                     if (!casillasOcupadas[pos.x][pos.y]) {
@@ -163,12 +168,19 @@ public class GridLogic {
             } else if (bicho instanceof BichitoMitosis) {
                 // Comportamiento epidémico: Generar copia en casilla libre
                 List<Posicion> libres = obtenerAdyacentesLibres(pos, casillasOcupadas, filas, columnas);
-                if (!libres.isEmpty()) {
+                if (!libres.isEmpty() && r.nextInt(4)==0) {
                     Posicion nuevaPos = libres.get(r.nextInt(libres.size()));
                     genNueva.add(new BichitoMitosis(nuevaPos));
                     casillasOcupadas[nuevaPos.x][nuevaPos.y] = true;
+                    stuck=false;
                 }
             }
+        }
+
+        if(stuck){
+            roundsStuck++;
+        }else{
+            roundsStuck=0;
         }
 
         //GUARDAMOS EL NUEVO INSTANTE EN LA HISTORIA
@@ -220,6 +232,10 @@ public class GridLogic {
         if (this == o) return true;
         if (!(o instanceof GridLogic other)) return false;
         return Objects.equals(this.bichitosTiempo, other.bichitosTiempo);
+    }
+
+    public boolean isStuck(){
+        return roundsStuck>=3;
     }
 
 }
