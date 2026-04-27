@@ -4,6 +4,7 @@ import main.LogicaNegocio.GridLogic;
 import main.ModeloDominio.*;
 import main.ModeloDominio.BichitoMitosis;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +50,83 @@ public class TestMitosis {
         int countPost = listaEspecifica.size();
         assertNotEquals(countPre, countPost);
     }
+    @Test
+    void testHijoSoloPuedeEstarEnAdyacente() {
+        GridLogic grid = new GridLogic(42, 5, 5);
+        grid.getBichitosTiempo().clear();
 
+        List<BichitoInterface> instante0 = new ArrayList<>();
+        Posicion posMadre = new Posicion(2, 2);
+        instante0.add(new BichitoMitosis(posMadre));
+
+        grid.getBichitosTiempo().add(instante0);
+
+        grid.step();
+
+        List<BichitoInterface> instante1 = grid.getBichitosTiempo().get(1);
+
+        List<BichitoMitosis> mitosis = instante1.stream()
+                .filter(b -> b instanceof BichitoMitosis)
+                .map(b -> (BichitoMitosis) b)
+                .toList();
+
+        boolean madrePresente = mitosis.stream()
+                .anyMatch(b -> b.getPosicion().equals(posMadre));
+
+        Assertions.assertTrue(madrePresente,
+                "La célula madre debe permanecer en su posición");
+
+        mitosis.stream()
+                .filter(b -> !b.getPosicion().equals(posMadre))
+                .forEach(hijo -> {
+                    Posicion posHijo = hijo.getPosicion();
+
+                    int distancia = Math.abs(posHijo.x - posMadre.x)
+                            + Math.abs(posHijo.y - posMadre.y);
+
+                    Assertions.assertEquals(1, distancia,
+                            "El hijo debe aparecer en una celda adyacente (distancia Manhattan = 1)");
+                });
+    }
+
+    @Test
+    void testMitosisNoSeReproduceTodosLosTurnos() {
+        GridLogic grid = new GridLogic(42, 6, 6);
+        grid.getBichitosTiempo().clear();
+
+        List<BichitoInterface> instante0 = new ArrayList<>();
+        instante0.add(new BichitoMitosis(new Posicion(3, 3)));
+
+        grid.getBichitosTiempo().add(instante0);
+
+        int turnosSinReproduccion = 0;
+
+
+        for (int t = 0; t < 30; t++) {
+
+            int antes = (int) grid.getBichitosTiempo()
+                    .get(grid.getBichitosTiempo().size() - 1)
+                    .stream()
+                    .filter(b -> b instanceof BichitoMitosis)
+                    .count();
+
+            grid.step();
+
+            int despues = (int) grid.getBichitosTiempo()
+                    .get(grid.getBichitosTiempo().size() - 1)
+                    .stream()
+                    .filter(b -> b instanceof BichitoMitosis)
+                    .count();
+
+            if (despues == antes) {
+                turnosSinReproduccion++;
+            }
+        }
+
+        //Tiene qu ehbaer un turno sin reproducir
+        Assertions.assertTrue(turnosSinReproduccion > 0,
+                "Debe haber turnos sin reproducción (probabilidad ~25%). ¿Está implementada?");
+    }
 
     @Test
     void testComprobarDistintos() {

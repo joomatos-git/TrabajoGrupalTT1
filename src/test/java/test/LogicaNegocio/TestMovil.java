@@ -75,6 +75,79 @@ public class TestMovil {
                 "Ningún BichitoMovil se movió en ningún turno");
     }
 
+    @Test
+    void testMovilSoloVaAAdyacentes() {
+        GridLogic grid = new GridLogic(42, 5, 5);
+
+        //Poner una posición inicial que conozcamos
+        grid.getBichitosTiempo().clear();
+        List<BichitoInterface> instante0 = new ArrayList<>();
+
+        Posicion posInicial = new Posicion(2, 2);
+        instante0.add(new BichitoMovil(posInicial));
+
+        grid.getBichitosTiempo().add(instante0);
+        grid.step();
+
+        List<BichitoInterface> instante1 = grid.getBichitosTiempo().get(1);
+
+        //Solo tiene que hbaer un móvil en el turno siguiente
+        List<BichitoMovil> moviles = instante1.stream()
+                .filter(b -> b instanceof BichitoMovil)
+                .map(b -> (BichitoMovil) b)
+                .toList();
+
+        Assertions.assertEquals(1, moviles.size(),
+                "Debe seguir habiendo exactamente 1 móvil");
+
+        // Comprobar que se movió a una celda adyacente
+        Posicion posNueva = moviles.get(0).getPosicion();
+
+        int distancia = Math.abs(posNueva.x - posInicial.x)
+                + Math.abs(posNueva.y - posInicial.y);
+
+        Assertions.assertEquals(1, distancia,
+                "El móvil debe moverse exactamente a una celda adyacente (distancia Manhattan = 1)");
+    }
+    @Test
+    void testMovilNoCruzaDiagonal() {
+        GridLogic grid = new GridLogic(7, 7);
+        List<List<BichitoInterface>> historia = grid.getBichitosTiempo();
+        for (int t = 0; t < 20; t++) {
+            grid.step();
+        }
+
+
+        for (int t = 0; t < historia.size() - 1; t++) {
+
+            List<BichitoMovil> antes = historia.get(t).stream()
+                    .filter(b -> b instanceof BichitoMovil)
+                    .map(b -> (BichitoMovil) b)
+                    .toList();
+
+            List<BichitoMovil> despues = historia.get(t + 1).stream()
+                    .filter(b -> b instanceof BichitoMovil)
+                    .map(b -> (BichitoMovil) b)
+                    .toList();
+
+            // Para cada móvil en el turno siguiente,
+            // comprobar que puede venir de alguna posición válida del turno anterior
+            for (BichitoMovil bDespues : despues) {
+                Posicion p1 = bDespues.getPosicion();
+
+                boolean movimientoValido = antes.stream().anyMatch(bAntes -> {
+                    Posicion p0 = bAntes.getPosicion();
+                    int dist = Math.abs(p1.x - p0.x) + Math.abs(p1.y - p0.y);
+                    return dist <= 1; // mismo sitio o adyacente
+                });
+
+                Assertions.assertTrue(movimientoValido,
+                        "Movimiento inválido en turno " + t +
+                                " hacia posición (" + p1.x + "," + p1.y + ")");
+            }
+        }
+    }
+
 
     @Test
     void testComprobarDistintos() {
