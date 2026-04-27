@@ -85,7 +85,7 @@ public class TestMitosis {
                             + Math.abs(posHijo.y - posMadre.y);
 
                     Assertions.assertEquals(1, distancia,
-                            "El hijo debe aparecer en una celda adyacente (distancia Manhattan = 1)");
+                            "El hijo debe aparecer en una celda adyacente");
                 });
     }
 
@@ -125,7 +125,7 @@ public class TestMitosis {
 
         //Tiene qu ehbaer un turno sin reproducir
         Assertions.assertTrue(turnosSinReproduccion > 0,
-                "Debe haber turnos sin reproducción (probabilidad ~25%). ¿Está implementada?");
+                "Debe haber turnos sin reproducción (probabilidad ~25%)");
     }
 
     @Test
