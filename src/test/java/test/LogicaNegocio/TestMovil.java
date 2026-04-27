@@ -80,7 +80,6 @@ public class TestMovil {
     void testMovilSoloVaAAdyacentes() {
         GridLogic grid = new GridLogic(42, 5, 5);
 
-        //Poner una posición inicial que conozcamos
         grid.getBichitosTiempo().clear();
         List<BichitoInterface> instante0 = new ArrayList<>();
 
@@ -92,7 +91,7 @@ public class TestMovil {
 
         List<BichitoInterface> instante1 = grid.getBichitosTiempo().get(1);
 
-        //Solo tiene que hbaer un móvil en el turno siguiente
+
         List<BichitoMovil> moviles = instante1.stream()
                 .filter(b -> b instanceof BichitoMovil)
                 .map(b -> (BichitoMovil) b)
@@ -100,8 +99,6 @@ public class TestMovil {
 
         Assertions.assertEquals(1, moviles.size(),
                 "Debe seguir habiendo exactamente 1 móvil");
-
-        // Comprobar que se movió a una celda adyacente
         Posicion posNueva = moviles.get(0).getPosicion();
 
         int distancia = Math.abs(posNueva.x - posInicial.x)

@@ -123,7 +123,6 @@ public class TestMitosis {
             }
         }
 
-        //Tiene qu ehbaer un turno sin reproducir
         Assertions.assertTrue(turnosSinReproduccion > 0,
                 "Debe haber turnos sin reproducción (probabilidad ~25%)");
     }

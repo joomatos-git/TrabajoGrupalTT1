@@ -117,6 +117,22 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
     - 2º: Se procesan los movimientos de las criaturas Móvil y las nuevas copias de Mitosis hacia las celdas que han quedado libres.
 - Creación del método helper *obtenerAdyacentesLibres*, que encapsula la lógica de detección de celdas vacías en las cuatro direcciones, verificando siempre los límites de la cuadrícula y la disponibilidad de la celda.
 
+**Joseba (Revisor)**
+- GridLogic.step() revisado y cambiado para representar las probabilidades de los distintos movimientos.
+- GridLogic.inicializar() revisado y cambiado para que la proporcion de tipos de criaturas no sea equitativo.
+- API revisada y modificada para enlazarla al funcionamiento de nuestro sistema. Comprobado que actualmente funciona el sistema de obtención de Token y de PUSH/GET.
+- Algunos tests revisados y modificados ante errores mínimos en estos.
+- Cambiada la construccion de los objetos gridLogic para permitir grids de tamaños distintos a 10x10 y para permitir un uso mas sencillo de los gridLogic con setSeed. me puedes hacer como un mini resumen para presnetarlo luego en 5 minutillos en el sprint de que hizo cada uno
+
+### Sprint 3
+
+**Alicia (Analista)**
+- Terminar en testMovil y testMitosis los test `testMovilSoloVaAAdyacentes`, `testMovilNoCruzaDiagonal` y `testHijoSoloPuedeEstarEnAdyacente` `testMitosisNoSeReproducenTodosLosTurnos`
+
+- **Raúl (Desarrollador)**
+- Terminar test `testComprobarDistintos` en TestMitosis y TestMovil
+
+
 ## Estrategia de pruebas
 
 El proyecto está orientado a **tests**, con cobertura de:
