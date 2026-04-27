@@ -28,6 +28,9 @@ public class SimulacionServiceImpl implements ISimulacionService {
         // Avanzamos 50 turnos (o los que quieras)
         for (int i = 0; i < 50; i++) {
             grid.step();
+            if (grid.isStuck()) {
+                break;
+            }
         }
 
         simulaciones.put(token, grid);
