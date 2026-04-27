@@ -155,3 +155,20 @@ El proyecto está orientado a **tests**, con cobertura de:
 - TestMovil falta por tener en cuenta si se mueve solo a contiguas. Tirar algun test mas con ese rollo
 - TestMitosis falta por tener en cuenta otras tantas cosillas como q de nuevo solo se multiplica contiguas vacías, o que no se multiplica todos los turnos.
 - GridLogic tiene el step efectuando mitosis TODOS los turnos (debería ser probabilidad del 25%) y lo mismo con el movimiento (rollo un 50%)?
+
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+
+NOTAS:
+
+Para comprobar la API.
+
+Comando en terminal: curl -X POST http://localhost:8080/simulacion/iniciar -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
+
+despues te metes a http://localhost:8080/simulacion/estado?token=(lo que te responda en la terminal)

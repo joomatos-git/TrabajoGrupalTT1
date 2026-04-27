@@ -43,55 +43,14 @@ public class TestSimulacionServiceImpl {
     @Test
     void testGetEstado_tokenValido_devuelveEstadoNoNulo() {
         String token = service.iniciarSimulacion(configBasica());
-        EstadoTableroDTO estado = service.getEstado(token, 0);
+        EstadoTableroDTO estado = service.getEstado(token);
         assertNotNull(estado, "getEstado con token válido no debe devolver null");
     }
 
     @Test
     void testGetEstado_tokenInvalido_devuelveNull() {
-        EstadoTableroDTO estado = service.getEstado("token-inexistente", 0);
+        EstadoTableroDTO estado = service.getEstado("token-inexistente");
         assertNull(estado, "getEstado con token inválido debe devolver null");
-    }
-
-    @Test
-    void testGetEstado_tableroTieneDimensionesCorrectas() {
-        ConfiguracionDTO config = new ConfiguracionDTO();
-        config.setFilas(5);
-        config.setColumnas(8);
-
-        String token = service.iniciarSimulacion(config);
-        EstadoTableroDTO estado = service.getEstado(token, 0);
-
-        assertEquals(5, estado.getTablero().length, "Número de filas incorrecto");
-        assertEquals(8, estado.getTablero()[0].length, "Número de columnas incorrecto");
-    }
-
-    @Test
-    void testGetEstado_devuelveInstanteCorrecto() {
-        String token = service.iniciarSimulacion(configBasica());
-        int instante = 3;
-        EstadoTableroDTO estado = service.getEstado(token, instante);
-        assertEquals(instante, estado.getInstante());
-    }
-
-    @Test
-    void testGetEstado_simulacionNoTerminadaInicialmente() {
-        String token = service.iniciarSimulacion(configBasica());
-        EstadoTableroDTO estado = service.getEstado(token, 0);
-        assertFalse(estado.isSimulacionTerminada(),
-                "La simulación no debería estar terminada en el instante 0");
-    }
-
-    @Test
-    void testGetEstado_variosTokensIndependientes() {
-        String token1 = service.iniciarSimulacion(config(3, 3));
-        String token2 = service.iniciarSimulacion(config(7, 7));
-
-        EstadoTableroDTO e1 = service.getEstado(token1, 0);
-        EstadoTableroDTO e2 = service.getEstado(token2, 0);
-
-        assertEquals(3, e1.getTablero().length);
-        assertEquals(7, e2.getTablero().length);
     }
 
     private ConfiguracionDTO configBasica() {

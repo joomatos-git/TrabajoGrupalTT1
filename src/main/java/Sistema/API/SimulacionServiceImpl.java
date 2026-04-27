@@ -38,7 +38,7 @@ public class SimulacionServiceImpl implements ISimulacionService {
     }
 
     @Override
-    public EstadoTableroDTO getEstado(String token, int instante) {
+    public EstadoTableroDTO getEstado(String token) {
         if (!simulaciones.containsKey(token)) {
             return null;
         }
@@ -46,30 +46,24 @@ public class SimulacionServiceImpl implements ISimulacionService {
         GridLogic grid = simulaciones.get(token);
         List<List<BichitoInterface>> historia = grid.getBichitosTiempo();
 
-        // Comprobamos que el instante pedido existe
-        if (instante < 0 || instante >= historia.size()) {
-            return null;
-        }
+        String tablero="";
 
-        int filas = grid.getGrid().getMatrix().length;
-        int columnas = grid.getGrid().getMatrix()[0].length;
-        String[][] tablero = new String[filas][columnas]; // null = vacío por defecto
+        tablero = tablero+(String.valueOf(grid.getGrid().getMatrix().length))+'\n';
 
-        // Rellenamos el tablero con los bichitos del instante pedido
-        for (BichitoInterface b : historia.get(instante)) {
-            int x = b.getPosicion().x;
-            int y = b.getPosicion().y;
-
-            if (b instanceof BichitoQuieto) {
-                tablero[x][y] = "QUIETO";
-            } else if (b instanceof BichitoMovil) {
-                tablero[x][y] = "MOVIL";
-            } else if (b instanceof BichitoMitosis) {
-                tablero[x][y] = "MITOSIS";
+        for(List<BichitoInterface> instante: historia){
+            for(BichitoInterface bicho : instante){
+                String bichoActual = (historia.indexOf(instante)) + "," + bicho.getPosicion().y + "," + bicho.getPosicion().x + ",";
+                if(bicho instanceof BichitoMitosis){
+                    bichoActual=bichoActual+"red";
+                }else if(bicho instanceof BichitoMovil){
+                    bichoActual=bichoActual+"blue";
+                }else if(bicho instanceof BichitoQuieto){
+                    bichoActual=bichoActual+"green";
+                }
+                tablero = tablero + (bichoActual)+'\n';
             }
         }
 
-        boolean terminada = historia.size() >= 51;
-        return new EstadoTableroDTO(instante, tablero, terminada);
+        return new EstadoTableroDTO(tablero);
     }
 }

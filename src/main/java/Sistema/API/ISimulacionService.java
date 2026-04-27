@@ -6,7 +6,7 @@ public interface ISimulacionService {
     // y devuelve un token
     String iniciarSimulacion(ConfiguracionDTO configuracion);
 
-    // Recibe el token de sesión y el número de instante que quieres consultar
+    // Recibe el token de sesión
     // y devuelve el estado del tablero en ese momento
-    EstadoTableroDTO getEstado(String token, int instante);
+    EstadoTableroDTO getEstado(String token);
 }

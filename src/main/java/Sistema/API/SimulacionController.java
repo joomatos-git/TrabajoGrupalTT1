@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/simulacion")
@@ -23,11 +24,10 @@ public class SimulacionController {
         return ResponseEntity.ok(token);
     }
 
-    @GetMapping("/estado")
+    @GetMapping(value = "/estado")
     public ResponseEntity<EstadoTableroDTO> getEstado(
-            @RequestParam String token,
-            @RequestParam int instante) {
-        EstadoTableroDTO estado = simulacionService.getEstado(token, instante);
+            @RequestParam String token) {
+        EstadoTableroDTO estado = simulacionService.getEstado(token);
         if (estado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
