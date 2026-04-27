@@ -53,5 +53,20 @@ public class TestMitosis {
 
     @Test
     void testComprobarDistintos() {
+        // Ejecutamos otra simulación paralela con semilla diferente
+        GridLogic grid2 = new GridLogic(1234);
+        for (int n = 1; n < 50; n++) {
+            grid2.step();
+        }
+
+        List<BichitoInterface> ultimaGen1 = grid1.getBichitosTiempo().get(49);
+        List<BichitoInterface> ultimaGen2 = grid2.getBichitosTiempo().get(49);
+
+        // Extraemos posiciones para comparar de forma más estricta
+        List<Posicion> pos1 = ultimaGen1.stream().filter(b -> b instanceof BichitoMitosis).map(BichitoInterface::getPosicion).toList();
+        List<Posicion> pos2 = ultimaGen2.stream().filter(b -> b instanceof BichitoMitosis).map(BichitoInterface::getPosicion).toList();
+
+        // Al ser aleatorio, el patrón de expansión final debería diferir
+        assertNotEquals(pos1, pos2,"El patrón de expansión de Mitosis debería ser diferente con semillas distintas");
     }
 }

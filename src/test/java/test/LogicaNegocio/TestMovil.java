@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 
@@ -78,6 +79,28 @@ public class TestMovil {
 
     @Test
     void testComprobarDistintos() {
-    }
+        // Creamos una segunda simulación con una semilla distinta a la implícita de grid1
+        GridLogic grid2 = new GridLogic(1234);
+        for (int n = 1; n < 50; n++) {
+            grid2.step();
+        }
 
+        // Recuperamos la última generación de ambas simulaciones
+        List<BichitoInterface> ultimaGen1 = grid1.getBichitosTiempo().get(49);
+        List<BichitoInterface> ultimaGen2 = grid2.getBichitosTiempo().get(49);
+
+        // Extraemos solo las posiciones de los móviles
+        List<Posicion> posMoviles1 = new ArrayList<>();
+        for (BichitoInterface b : ultimaGen1) {
+            if (b instanceof BichitoMovil) posMoviles1.add(b.getPosicion());
+        }
+
+        List<Posicion> posMoviles2 = new ArrayList<>();
+        for (BichitoInterface b : ultimaGen2) {
+            if (b instanceof BichitoMovil) posMoviles2.add(b.getPosicion());
+        }
+
+        // Si la aleatoriedad funciona, las posiciones finales de los móviles deben ser distintas
+        assertNotEquals(posMoviles1, posMoviles2, "Dos simulaciones distintas no deberían tener los móviles en las mismas posiciones");
+    }
 }
