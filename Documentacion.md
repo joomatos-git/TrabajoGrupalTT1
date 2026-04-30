@@ -129,8 +129,9 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 **Alicia (Analista)**
 - Terminar en testMovil y testMitosis los test `testMovilSoloVaAAdyacentes`, `testMovilNoCruzaDiagonal` y `testHijoSoloPuedeEstarEnAdyacente` `testMitosisNoSeReproducenTodosLosTurnos`
 
-- **Raúl (Desarrollador)**
+**Raúl (Desarrollador)**
 - Terminar test `testComprobarDistintos` en TestMitosis y TestMovil
+- Revisar el formato de salida de la API.
 
 
 ## Estrategia de pruebas
