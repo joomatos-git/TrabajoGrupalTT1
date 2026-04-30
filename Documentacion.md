@@ -126,12 +126,17 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 
 ### Sprint 3
 
-**Alicia (Analista)**
+**Alicia (QA)**
 - Terminar en testMovil y testMitosis los test `testMovilSoloVaAAdyacentes`, `testMovilNoCruzaDiagonal` y `testHijoSoloPuedeEstarEnAdyacente` `testMitosisNoSeReproducenTodosLosTurnos`
 
-**Raúl (Desarrollador)**
+**Raúl (SCRUM Master)**
 - Terminar test `testComprobarDistintos` en TestMitosis y TestMovil
 - Revisar el formato de salida de la API.
+
+**Joseba (Desarrollador)**
+- Modificar el GridLogic para evitar bucles vacíos cuando el sistema está atascado. (Introducida una flag para esto)
+- Cambiada implementación de la API para que el GET devuelva todos los instantes de golpe en vez de solicitar el instante manualmente.
+- Cambiado formato del return de la API para que sea como el formato requerido de (instante,pos_y,pos_x,color)
 
 
 ## Estrategia de pruebas
