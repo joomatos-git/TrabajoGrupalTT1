@@ -134,7 +134,8 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - Revisar el formato de salida de la API.
 
 **Joseba (Desarrollador)**
-- Modificar el GridLogic para evitar bucles vacíos cuando el sistema está atascado. (Introducida una flag para esto)
+- Modificar el GridLogic como clase para evitar bucles vacíos cuando el sistema está atascado. (Introducida una flag para esto)
+- Modificado GridLogic.step() para incluir que los movimientos y la clonación de los respectivos tipos de criatura funcionen con un 50% y 25% de probabilidad en vez de todos los steps.
 - Cambiada implementación de la API para que el GET devuelva todos los instantes de golpe en vez de solicitar el instante manualmente.
 - Cambiado formato del return de la API para que sea como el formato requerido de (instante,pos_y,pos_x,color)
 
