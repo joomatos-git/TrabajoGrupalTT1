@@ -26,10 +26,11 @@ public class SimulacionController {
         return ResponseEntity.ok(token);
     }
 
-    @GetMapping(value = "/Resultados")
+    @PostMapping(value = "Resultados")
     public ResponseEntity<EstadoTableroDTO> getEstado(
-            @RequestParam int token) {
-        EstadoTableroDTO estado = simulacionService.getEstado(token);
+            @RequestParam int tok) {
+        System.out.println("ha entrao");
+        EstadoTableroDTO estado = simulacionService.getEstado(tok);
         if (estado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
