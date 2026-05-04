@@ -12,24 +12,9 @@ public class GridLogic {
     List<List<BichitoInterface>> bichitosTiempo;
     int roundsStuck=0;
 
-    public GridLogic(){
-        grid = new Grid(10,10);
-        initialize();
-    }
-
-    public GridLogic(int row, int col){
-        grid = new Grid(row, col);
-        initialize();
-    }
-
-    public GridLogic(int seed){
+    public GridLogic(int[] cantidadesIniciales) {
         grid = new Grid(10, 10);
-        initialize(seed);
-    }
-
-    public GridLogic(int seed, int row, int col){
-        grid = new Grid(row, col);
-        initialize(seed);
+        initialize(cantidadesIniciales[0], cantidadesIniciales[1], cantidadesIniciales[2]);
     }
 
     private void initialize(){
