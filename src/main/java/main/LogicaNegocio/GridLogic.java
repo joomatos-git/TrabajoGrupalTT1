@@ -2,11 +2,7 @@ package main.LogicaNegocio;
 
 import main.ModeloDominio.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-
+import java.util.*;
 public class GridLogic {
     Grid grid;
     List<List<BichitoInterface>> bichitosTiempo;
@@ -16,74 +12,31 @@ public class GridLogic {
         grid = new Grid(10, 10);
         initialize(cantidadesIniciales[0], cantidadesIniciales[1], cantidadesIniciales[2]);
     }
-
-    private void initialize(){
-        bichitosTiempo = new ArrayList<List<BichitoInterface>>();
+    public void initialize(int numQuietos, int numMoviles, int numMitosis) {
+        bichitosTiempo = new ArrayList<>();
         bichitosTiempo.add(new ArrayList<>());
         Random r = new Random();
+
+        // Generamos todas las posiciones del grid y las mezclamos
+        List<Posicion> posiciones = new ArrayList<>();
         for (int row = 0; row < grid.getMatrix().length; row++) {
             for (int col = 0; col < grid.getMatrix()[row].length; col++) {
-
-                if (r.nextInt(6) == 0) {
-                    switch (r.nextInt(3)) {
-                        case 0:
-                            bichitosTiempo.get(0).add(
-                                    new BichitoMitosis(new Posicion(row, col))
-                            );
-                            break;
-                        case 1:
-                            bichitosTiempo.get(0).add(
-                                    new BichitoMovil(new Posicion(row, col))
-                            );
-                            break;
-                        case 2:
-                            bichitosTiempo.get(0).add(
-                                    new BichitoQuieto(new Posicion(row, col))
-                            );
-                            break;
-                    }
-                }
+                posiciones.add(new Posicion(row, col));
             }
         }
+        Collections.shuffle(posiciones, r);
 
-    }
-
-
-    public void initialize(int seed){
-        bichitosTiempo = new ArrayList<List<BichitoInterface>>();
-        bichitosTiempo.add(new ArrayList<>());
-        Random r = new Random(seed);
-        for (int row = 0; row < grid.getMatrix().length; row++) {
-            for (int col = 0; col < grid.getMatrix()[row].length; col++) {
-
-                if (r.nextInt(6) < 2) {
-                    switch (r.nextInt(6)) {
-                        case (0):
-                        case (1):
-                        case (2):
-                            bichitosTiempo.get(0).add(
-                                    new BichitoQuieto(new Posicion(row, col))
-                            );
-                            break;
-                        case 3:
-                        case 4:
-                            bichitosTiempo.get(0).add(
-                                    new BichitoMovil(new Posicion(row, col))
-                            );
-                            break;
-                        case 5:
-                            bichitosTiempo.get(0).add(
-                                    new BichitoMitosis(new Posicion(row, col))
-                            );
-                            break;
-                    }
-                }
-            }
+        int idx = 0;
+        for (int i = 0; i < numQuietos && idx < posiciones.size(); i++, idx++) {
+            bichitosTiempo.get(0).add(new BichitoQuieto(posiciones.get(idx)));
+        }
+        for (int i = 0; i < numMoviles && idx < posiciones.size(); i++, idx++) {
+            bichitosTiempo.get(0).add(new BichitoMovil(posiciones.get(idx)));
+        }
+        for (int i = 0; i < numMitosis && idx < posiciones.size(); i++, idx++) {
+            bichitosTiempo.get(0).add(new BichitoMitosis(posiciones.get(idx)));
         }
     }
-
-
-
 
     //para avanzar "turnos"
     public void step(){
@@ -96,7 +49,7 @@ public class GridLogic {
         // Recuperamos los bichitos actuales
         List<BichitoInterface> genActual = bichitosTiempo.get(bichitosTiempo.size() - 1);
         List<BichitoInterface> genNueva = new ArrayList<>();
-        
+
         int filas = grid.getMatrix().length;
         int columnas = grid.getMatrix()[0].length;
 
@@ -120,7 +73,7 @@ public class GridLogic {
         //Reservar sitio para los que NO se mueven
         for (BichitoInterface bicho : bichosOrdenados) {
             Posicion pos = bicho.getPosicion();
-            
+
             if (bicho instanceof BichitoQuieto) {
                 genNueva.add(new BichitoQuieto(new Posicion(pos.x, pos.y)));
                 casillasOcupadas[pos.x][pos.y] = true;
@@ -190,19 +143,19 @@ public class GridLogic {
         bichitosTiempo.clear();
         grid.setMatrix(null);
     }
-    
+
     /**
      * Método auxiliar para buscar las casillas adyacentes (Arriba, Abajo, Izquierda, Derecha)
      * que estén dentro del tablero y que no estén ocupadas.
      */
     private List<Posicion> obtenerAdyacentesLibres(Posicion p, boolean[][] ocupadas, int maxFilas, int maxCols) {
         List<Posicion> libres = new ArrayList<>();
-        int[][] direcciones = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; 
-        
+        int[][] direcciones = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
         for (int[] dir : direcciones) {
             int nx = p.x + dir[0];
             int ny = p.y + dir[1];
-            
+
             // Comprobar límites del tablero y si la casilla está vacía
             if (nx >= 0 && nx < maxFilas && ny >= 0 && ny < maxCols && !ocupadas[nx][ny]) {
                 libres.add(new Posicion(nx, ny));
