@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
 
 @RestController
-@RequestMapping("/simulacion")
+@RequestMapping("/")
 public class SimulacionController {
 
     @Autowired
@@ -18,15 +17,18 @@ public class SimulacionController {
         this.simulacionService = simulacionService;
     }
 
-    @PostMapping("/iniciar")
-    public ResponseEntity<String> iniciarSimulacion(@RequestBody ConfiguracionDTO configuracion) {
-        String token = simulacionService.iniciarSimulacion(configuracion);
+    @PostMapping("Solicitud/Solicitar")
+    public ResponseEntity<Integer> iniciarSimulacion(
+            @RequestParam(required = false) String nombreUsuario,
+            @RequestBody ConfiguracionDTO configuracion) {
+        int token = simulacionService.iniciarSimulacion(configuracion);
+        System.out.println(token);
         return ResponseEntity.ok(token);
     }
 
-    @GetMapping(value = "/estado")
+    @GetMapping(value = "/Resultados")
     public ResponseEntity<EstadoTableroDTO> getEstado(
-            @RequestParam String token) {
+            @RequestParam int token) {
         EstadoTableroDTO estado = simulacionService.getEstado(token);
         if (estado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

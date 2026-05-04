@@ -14,15 +14,13 @@ import java.util.*;
 public class SimulacionServiceImpl implements ISimulacionService {
 
     // Ahora guardamos el GridLogic completo, no solo la config
-    private Map<String, GridLogic> simulaciones = new HashMap<>();
+    private Map<Integer, GridLogic> simulaciones = new HashMap<>();
 
     @Override
-    public String iniciarSimulacion(ConfiguracionDTO configuracion) {
-        String token = UUID.randomUUID().toString();
+    public int iniciarSimulacion(ConfiguracionDTO configuracion) {
+        int token = Math.abs(UUID.randomUUID().hashCode());
         Random r = new Random();
-        int seed = r.nextInt();
-        System.out.println(seed);
-        GridLogic grid = new GridLogic(seed, configuracion.getCantidadesIniciales());
+        GridLogic grid = new GridLogic(configuracion.getCantidadesIniciales());
 
 
         // Avanzamos 50 turnos (o los que quieras)
@@ -38,7 +36,7 @@ public class SimulacionServiceImpl implements ISimulacionService {
     }
 
     @Override
-    public EstadoTableroDTO getEstado(String token) {
+    public EstadoTableroDTO getEstado(int token) {
         if (!simulaciones.containsKey(token)) {
             return null;
         }

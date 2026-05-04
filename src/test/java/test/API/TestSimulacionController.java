@@ -21,30 +21,34 @@ public class TestSimulacionController {
 
     @Test
     void testIniciar_returns200() {
-        ConfiguracionDTO config = config(10, 10, 2, 2, 2);
-        var response = controller.iniciarSimulacion(config);
+
+
+        ConfiguracionDTO config = config(new int[]{5, 5, 5}, new String[]{"Quieto", "Movil", "Mitosis"});
+
+        var response = controller.iniciarSimulacion("", config);
         assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
     void testIniciar_devuelveTokenNoVacio() {
-        ConfiguracionDTO config = config(10, 10, 1, 1, 1);
-        var response = controller.iniciarSimulacion(config);
-        String token = response.getBody();
+        ConfiguracionDTO config = config(new int[]{5, 5, 5}, new String[]{"Quieto", "Movil", "Mitosis"});
+        var response = controller.iniciarSimulacion("",config);
+        int token = response.getBody();
         assertNotNull(token);
-        assertFalse(token.isBlank());
+        assertFalse(token==0);
     }
 
     @Test
     void testGetEstado_tokenValido_returns200() {
-        String token = controller.iniciarSimulacion(config(10, 10, 0, 0, 0)).getBody();
+        int token = controller.iniciarSimulacion("",config(new int[]{5, 5, 5}, new String[]{"Quieto", "Movil", "Mitosis"})).getBody();
+
         var response = controller.getEstado(token);
         assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
     void testGetEstado_tokenInvalido_returns404() {
-        var response = controller.getEstado("token-que-no-existe");
+        var response = controller.getEstado(12345);
         assertEquals(404, response.getStatusCode().value());
     }
 
@@ -52,7 +56,7 @@ public class TestSimulacionController {
 
     @Test
     void testGetEstado_respuestaContieneTablero() {
-        String token = controller.iniciarSimulacion(config(4, 4, 0, 0, 0)).getBody();
+        int token = controller.iniciarSimulacion("",config(new int[]{5, 5, 5}, new String[]{"Quieto", "Movil", "Mitosis"})).getBody();
         var response = controller.getEstado(token);
         String tablero = response.getBody().getTablero();
         assertNotNull(tablero);
@@ -60,24 +64,21 @@ public class TestSimulacionController {
 
     @Test
     void testGetEstado_faltaToken_returns404() {
-        var response = controller.getEstado(null);
+        var response = controller.getEstado(0);
         assertEquals(404, response.getStatusCode().value());
     }
 
     @Test
     void testGetEstado_tokenVacio_returns404() {
-        var response = controller.getEstado("");
+        var response = controller.getEstado(0);
         assertEquals(404, response.getStatusCode().value());
     }
 
 
-    private ConfiguracionDTO config(int filas, int cols, int quietos, int moviles, int mitosis) {
+    private ConfiguracionDTO config(int[] cantidades, String[] nombres) {
         ConfiguracionDTO c = new ConfiguracionDTO();
-        c.setFilas(filas);
-        c.setColumnas(cols);
-        c.setNumQuietos(quietos);
-        c.setNumMoviles(moviles);
-        c.setNumMitosis(mitosis);
+        c.setCantidadesIniciales(cantidades);
+        c.setNombreEntidades(nombres);
         return c;
     }
 }
