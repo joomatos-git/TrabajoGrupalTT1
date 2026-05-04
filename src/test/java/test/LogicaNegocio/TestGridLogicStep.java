@@ -106,7 +106,9 @@ public class TestGridLogicStep {
 
         assertEquals(0, gridLogic.getBichitosTiempo().size());
 
-        assertDoesNotThrow(() -> gridLogic.initialize(2));
-        assertEquals(1, gridLogic.getBichitosTiempo().size());
+        GridLogic newLogic = new GridLogic();
+        newLogic.initialize(2);
+
+        assertEquals(1, newLogic.getBichitosTiempo().size());
     }
 }
