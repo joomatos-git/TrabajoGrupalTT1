@@ -13,7 +13,6 @@ import java.util.*;
 @Service
 public class SimulacionServiceImpl implements ISimulacionService {
 
-    // Ahora guardamos el GridLogic completo, no solo la config
     private Map<Integer, GridLogic> simulaciones = new HashMap<>();
 
     @Override
@@ -21,9 +20,6 @@ public class SimulacionServiceImpl implements ISimulacionService {
         int token = Math.abs(UUID.randomUUID().hashCode());
         Random r = new Random();
         GridLogic grid = new GridLogic(configuracion.getCantidadesIniciales());
-
-
-        // Avanzamos 50 turnos (o los que quieras)
         for (int i = 0; i < 50; i++) {
             grid.step();
             if (grid.isStuck()) {
@@ -52,11 +48,11 @@ public class SimulacionServiceImpl implements ISimulacionService {
             for(BichitoInterface bicho : instante){
                 String bichoActual = (historia.indexOf(instante)) + "," + bicho.getPosicion().y + "," + bicho.getPosicion().x + ",";
                 if(bicho instanceof BichitoMitosis){
-                    bichoActual=bichoActual+"red";
+                    bichoActual=bichoActual+"#00c853";
                 }else if(bicho instanceof BichitoMovil){
-                    bichoActual=bichoActual+"blue";
+                    bichoActual=bichoActual+"#d500f9";
                 }else if(bicho instanceof BichitoQuieto){
-                    bichoActual=bichoActual+"green";
+                    bichoActual=bichoActual+"#f50057";
                 }
                 tablero = tablero + (bichoActual)+'\n';
             }
