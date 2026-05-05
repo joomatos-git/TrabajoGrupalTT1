@@ -20,7 +20,7 @@ public class TestMitosis {
 
     @BeforeEach
     void setUp() {
-        grid1 = new GridLogic();
+        grid1 = new GridLogic(new int[]{0, 0, 3});
         for (int n = 1; n < 50; n++) {
             grid1.step();
         }
@@ -33,7 +33,7 @@ public class TestMitosis {
 
     @Test
     void testComprobarMultiplicarse() {
-        List<BichitoMitosis> listaEspecifica = new ArrayList<BichitoMitosis>();
+        List<BichitoMitosis> listaEspecifica = new ArrayList<>();
         List<List<BichitoInterface>> listaGeneral = grid1.getBichitosTiempo();
 
         for (BichitoInterface b : listaGeneral.get(0)) {
@@ -48,17 +48,18 @@ public class TestMitosis {
             }
         }
         int countPost = listaEspecifica.size();
-        assertNotEquals(countPre, countPost);
+        assertNotEquals(countPre, countPost,
+                "El número de BichitoMitosis debe haber cambiado tras 40 turnos");
     }
+
     @Test
     void testHijoSoloPuedeEstarEnAdyacente() {
-        GridLogic grid = new GridLogic(42, 5, 5);
+        GridLogic grid = new GridLogic(new int[]{0, 0, 0});
         grid.getBichitosTiempo().clear();
 
         List<BichitoInterface> instante0 = new ArrayList<>();
         Posicion posMadre = new Posicion(2, 2);
         instante0.add(new BichitoMitosis(posMadre));
-
         grid.getBichitosTiempo().add(instante0);
 
         grid.step();
@@ -80,10 +81,8 @@ public class TestMitosis {
                 .filter(b -> !b.getPosicion().equals(posMadre))
                 .forEach(hijo -> {
                     Posicion posHijo = hijo.getPosicion();
-
                     int distancia = Math.abs(posHijo.x - posMadre.x)
                             + Math.abs(posHijo.y - posMadre.y);
-
                     Assertions.assertEquals(1, distancia,
                             "El hijo debe aparecer en una celda adyacente");
                 });
@@ -91,19 +90,16 @@ public class TestMitosis {
 
     @Test
     void testMitosisNoSeReproduceTodosLosTurnos() {
-        GridLogic grid = new GridLogic(42, 6, 6);
+        GridLogic grid = new GridLogic(new int[]{0, 0, 0});
         grid.getBichitosTiempo().clear();
 
         List<BichitoInterface> instante0 = new ArrayList<>();
         instante0.add(new BichitoMitosis(new Posicion(3, 3)));
-
         grid.getBichitosTiempo().add(instante0);
 
         int turnosSinReproduccion = 0;
 
-
         for (int t = 0; t < 30; t++) {
-
             int antes = (int) grid.getBichitosTiempo()
                     .get(grid.getBichitosTiempo().size() - 1)
                     .stream()
@@ -124,25 +120,22 @@ public class TestMitosis {
         }
 
         Assertions.assertTrue(turnosSinReproduccion > 0,
-                "Debe haber turnos sin reproducción (probabilidad ~25%)");
+                "Debe haber turnos sin reproducción (probabilidad ~75%)");
     }
 
     @Test
     void testComprobarDistintos() {
-        // Ejecutamos otra simulación paralela con semilla diferente
-        GridLogic grid2 = new GridLogic(1234);
+        GridLogic grid2 = new GridLogic(new int[]{0, 0, 1});
         for (int n = 1; n < 50; n++) {
             grid2.step();
         }
 
-        List<BichitoInterface> ultimaGen1 = grid1.getBichitosTiempo().get(49);
-        List<BichitoInterface> ultimaGen2 = grid2.getBichitosTiempo().get(49);
+        long count1 = grid1.getBichitosTiempo().get(10).stream()
+                .filter(b -> b instanceof BichitoMitosis).count();
+        long count2 = grid2.getBichitosTiempo().get(10).stream()
+                .filter(b -> b instanceof BichitoMitosis).count();
 
-        // Extraemos posiciones para comparar de forma más estricta
-        List<Posicion> pos1 = ultimaGen1.stream().filter(b -> b instanceof BichitoMitosis).map(BichitoInterface::getPosicion).toList();
-        List<Posicion> pos2 = ultimaGen2.stream().filter(b -> b instanceof BichitoMitosis).map(BichitoInterface::getPosicion).toList();
-
-        // Al ser aleatorio, el patrón de expansión final debería diferir
-        assertNotEquals(pos1, pos2,"El patrón de expansión de Mitosis debería ser diferente con semillas distintas");
+        assertNotEquals(count1, count2,
+                "Con diferente número inicial de mitosis, la expansión en el turno 10 debe ser distinta");
     }
 }

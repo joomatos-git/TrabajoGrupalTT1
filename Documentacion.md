@@ -179,3 +179,11 @@ Para comprobar la API.
 Comando en terminal: curl -X POST http://localhost:8080/simulacion/iniciar -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
 
 despues te metes a http://localhost:8080/simulacion/estado?token=(lo que te responda en la terminal)
+
+Test que voy a cambiar:
+Todo TestGeneracionInicial
+Todo TestGridLogicStep
+TestMitosis-3 test y setUp
+TestMovil-3 test y setUp
+TestQuieto- setUp
+TestSimulacionController.testGetEstado_respuestaContieneTablero- Tienen que ser getData

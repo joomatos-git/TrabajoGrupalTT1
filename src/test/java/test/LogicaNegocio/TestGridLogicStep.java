@@ -15,7 +15,7 @@ public class TestGridLogicStep {
 
     @BeforeEach
     void setUp() {
-        gridLogic = new GridLogic();
+        gridLogic = new GridLogic(new int[]{2, 3, 2});
     }
 
     @AfterEach
@@ -23,10 +23,8 @@ public class TestGridLogicStep {
         gridLogic = null;
     }
 
-
     @Test
     void testStep_acumulaInstantesDetiempo() {
-        gridLogic.initialize(1);
         assertEquals(1, gridLogic.getBichitosTiempo().size());
 
         gridLogic.step();
@@ -36,16 +34,14 @@ public class TestGridLogicStep {
         assertEquals(3, gridLogic.getBichitosTiempo().size());
     }
 
-
     @Test
-    void testStep_sinInitializeNoCrashea() {
-        assertDoesNotThrow(() -> gridLogic.step());
+    void testStep_sinBichitosNoCrashea() {
+        GridLogic gridVacio = new GridLogic(new int[]{0, 0, 0});
+        assertDoesNotThrow(() -> gridVacio.step());
     }
-
 
     @Test
     void testStep_sinColisionesEnNingunInstante() {
-        gridLogic.initialize(7);
         for (int i = 0; i < 15; i++) {
             gridLogic.step();
         }
@@ -64,10 +60,8 @@ public class TestGridLogicStep {
         }
     }
 
-
     @Test
     void testStep_todosBichitosEnRangoValido() {
-        gridLogic.initialize(3);
         for (int i = 0; i < 20; i++) {
             gridLogic.step();
         }
@@ -83,10 +77,8 @@ public class TestGridLogicStep {
         }
     }
 
-
     @Test
     void testStep_nuncaSuperaCapacidadTablero() {
-        gridLogic.initialize(5);
         for (int i = 0; i < 30; i++) {
             gridLogic.step();
         }
@@ -100,15 +92,12 @@ public class TestGridLogicStep {
 
     @Test
     void testTeardown_limpiaYPermiteReinicializar() {
-        gridLogic.initialize(1);
         gridLogic.step();
         gridLogic.teardown();
 
         assertEquals(0, gridLogic.getBichitosTiempo().size());
 
-        GridLogic newLogic = new GridLogic();
-        newLogic.initialize(2);
-
+        GridLogic newLogic = new GridLogic(new int[]{1, 1, 1});
         assertEquals(1, newLogic.getBichitosTiempo().size());
     }
 }

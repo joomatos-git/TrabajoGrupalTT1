@@ -11,14 +11,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Comprobar funcionalidad del bichoquieto
 public class TestQuieto {
 
     GridLogic grid1;
 
     @BeforeEach
     void setUp() {
-        grid1 = new GridLogic(42);
+        grid1 = new GridLogic(new int[]{5, 2, 2});
         for (int n = 0; n < 10; n++) {
             grid1.step();
         }
@@ -28,7 +27,6 @@ public class TestQuieto {
     void tearDown() {
         grid1 = null;
     }
-
 
     @Test
     void testQuietos_noSeMovenEnNingunaRonda() {
@@ -42,7 +40,7 @@ public class TestQuieto {
         }
 
         assumeTrue(!posicionesIniciales.isEmpty(),
-                "Con esta semilla no hay BichitoQuieto en la generación inicial");
+                "No hay BichitoQuieto en la generación inicial");
 
         for (int n = 1; n < historial.size(); n++) {
             List<Posicion> posicionesEnN = new ArrayList<>();
@@ -55,16 +53,12 @@ public class TestQuieto {
                     "El número de BichitoQuieto no debe cambiar en el instante " + n);
 
             posicionesIniciales.sort((p1, p2) -> {
-                if (p1.x != p2.x) {
-                    return Integer.compare(p1.x, p2.x);
-                }
+                if (p1.x != p2.x) return Integer.compare(p1.x, p2.x);
                 return Integer.compare(p1.y, p2.y);
             });
 
             posicionesEnN.sort((p1, p2) -> {
-                if (p1.x != p2.x) {
-                    return Integer.compare(p1.x, p2.x);
-                }
+                if (p1.x != p2.x) return Integer.compare(p1.x, p2.x);
                 return Integer.compare(p1.y, p2.y);
             });
 
@@ -74,7 +68,6 @@ public class TestQuieto {
             }
         }
     }
-
 
     @Test
     void testQuietos_cantidadConstanteEnElTiempo() {
@@ -90,7 +83,6 @@ public class TestQuieto {
                     "La cantidad de BichitoQuieto cambió en el instante " + n);
         }
     }
-
 
     private void assumeTrue(boolean condition, String message) {
         org.junit.jupiter.api.Assumptions.assumeTrue(condition, message);
