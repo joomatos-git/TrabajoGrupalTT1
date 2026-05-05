@@ -139,6 +139,17 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - Cambiada implementación de la API para que el GET devuelva todos los instantes de golpe en vez de solicitar el instante manualmente.
 - Cambiado formato del return de la API para que sea como el formato requerido de (instante,pos_y,pos_x,color)
 
+### Sprint 4
+
+**Alicia (Desarrolladora)**
+- Adaptación de los tests existentes al nuevo constructor de `GridLogic`:
+  - `TestGeneracionInicial`, `TestGridLogicStep`, `TestMitosis`, `TestMovil`, `TestQuieto`, `TestSimulacionController`
+- Detección de que los colores de los bichitos en `SimulacionServiceImpl` no contrastaban con el fondo del frontend, haciendo algunos tipos invisibles: cambio de la paleta de colores para que los tres tipos sean claramente distinguibles entre sí y sobre el fondo.
+  Corrección del bug en `GridLogic.step()`: refactorización del flujo en 4 pasos para que los Móviles tengan prioridad sobre los hijos de Mitosis, garantizando que un Móvil nunca desaparezca.
+- Detección de que la simulación terminaba demasiado pronto al estar el umbral de `isStuck()` demasiado bajo (3 rondas), cambio a 10.
+
+**Joseba (Arquitecto)**
+- Prueba de integración completa entre el trabajo grupal (backend) y el trabajo individual (frontend): arranque de ambos servicios en local, verificación del flujo completo desde la solicitud de simulación hasta la visualización del tablero.
 
 ## Estrategia de pruebas
 
@@ -179,11 +190,3 @@ Para comprobar la API.
 Comando en terminal: curl -X POST http://localhost:8080/simulacion/iniciar -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
 
 despues te metes a http://localhost:8080/simulacion/estado?token=(lo que te responda en la terminal)
-
-Test que voy a cambiar:
-Todo TestGeneracionInicial
-Todo TestGridLogicStep
-TestMitosis-3 test y setUp
-TestMovil-3 test y setUp
-TestQuieto- setUp
-TestSimulacionController.testGetEstado_respuestaContieneTablero- Tienen que ser getData
