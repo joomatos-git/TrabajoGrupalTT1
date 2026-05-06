@@ -187,6 +187,6 @@ NOTAS:
 
 Para comprobar la API.
 
-Comando en terminal: curl -X POST http://localhost:8080/simulacion/iniciar -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
+Comando en terminal: curl -X POST http://localhost:50000/solicitud -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
 
-despues te metes a http://localhost:8080/simulacion/estado?token=(lo que te responda en la terminal)
+despues te metes a http://localhost:50000/grid?tok= que te responda en la terminal)
