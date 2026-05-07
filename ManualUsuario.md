@@ -30,6 +30,7 @@ Este endpoint crea una nueva cuadrícula de 10x10, distribuye las criaturas y ca
     "cantidadesIniciales": [5, 8, 3],
     "nombreEntidades": ["Quieto", "Movil", "Mitosis"]
   }
+  ```
 * **Respuesta:** Un número entero que actúa como Token de identificación para la simulación (ej. 18459230).
 
 ### B. Obtener Resultados
@@ -46,15 +47,16 @@ La respuesta del endpoint de resultados contiene un objeto con una clave data. S
 * **Primera línea:** Tamaño del lado de la cuadrícula (ej. 10).
 * **Resto de líneas:** Estado de cada bicho en el formato instante,y,x,color_hexadecimal.
 * Colores representados:
-  *   (Rosa): Criatura Quieta.
-  *   (Morado): Criatura Móvil.
-  *   (Verde): Criatura Mitosis.
+  *  #f50057 (Rosa): Criatura Quieta.
+  *  #d500f9 (Morado): Criatura Móvil.
+  *  #00c853 (Verde): Criatura Mitosis.
 
 ### D. Ejemplo rápido con cURL
 * **1. Solicitar simulación**
-  
+  ```bash
   curl -X POST http://localhost:50000/Solicitud/Solicitar -H "Content-Type: application/json" -d "{\"cantidadesIniciales\":[5,5,5], \"nombreEntidades\":[\"Q\",\"M\",\"MT\"]}"
-
+  ```
 * **2. Obtener resultados (sustituir {TOKEN})**
-  
+  ```bash
   curl -X POST "http://localhost:50000/Resultados?tok={TOKEN}"
+  ```
