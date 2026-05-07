@@ -190,3 +190,14 @@ Para comprobar la API.
 Comando en terminal: curl -X POST http://localhost:50000/solicitud -H "Content-Type: application/json" -d "{\"filas\":10,\"columnas\":10,\"numQuietos\":5,\"numMoviles\":5,\"numMitosis\":3}"
 
 despues te metes a http://localhost:50000/grid?tok= que te responda en la terminal)
+
+### FORMA DE COMPROBAR LA API CORREGIDA 
+
+1. **Solicitar inicio:**
+   Comando en terminal:
+   `curl -X POST http://localhost:50000/Solicitud/Solicitar -H "Content-Type: application/json" -d "{\"cantidadesIniciales\":[5,5,3], \"nombreEntidades\":[\"Quieto\",\"Movil\",\"Mitosis\"]}"`
+
+2. **Consultar historial completo:**
+   Acceder mediante POST a la URL recibida con el token:
+   `http://localhost:50000/Resultados?tok={TOKEN_RECIBIDO}`
+
