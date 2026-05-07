@@ -34,7 +34,7 @@ public class SimulacionServiceImpl implements ISimulacionService {
         int token = Math.abs(UUID.randomUUID().hashCode());
         Random r = new Random();
         GridLogic grid = new GridLogic(configuracion.getCantidadesIniciales());
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 70; i++) {
             grid.step();
             if (grid.isStuck()) {
                 break;
