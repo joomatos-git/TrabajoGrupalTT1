@@ -68,11 +68,11 @@ public class SimulacionServiceImpl implements ISimulacionService {
             for(BichitoInterface bicho : instante){
                 String bichoActual = (historia.indexOf(instante)) + "," + bicho.getPosicion().y + "," + bicho.getPosicion().x + ",";
                 if(bicho instanceof BichitoMitosis){
-                    bichoActual=bichoActual+"#00c853";
+                    bichoActual=bichoActual+"#00FF00";
                 }else if(bicho instanceof BichitoMovil){
-                    bichoActual=bichoActual+"#d500f9";
+                    bichoActual=bichoActual+"#EA63FF";
                 }else if(bicho instanceof BichitoQuieto){
-                    bichoActual=bichoActual+"#f50057";
+                    bichoActual=bichoActual+"#FF0000";
                 }
                 tablero = tablero + (bichoActual)+'\n';
             }
