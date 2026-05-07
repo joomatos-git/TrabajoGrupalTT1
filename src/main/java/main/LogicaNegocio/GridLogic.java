@@ -62,9 +62,8 @@ public class GridLogic {
      * - Mitosis de criaturas (25% de probabilidad).
      * Detecta si el sistema se encuentra en un estado bloqueado (stuck).
      */
-    public void step(){
-        boolean stuck=true;
 
+    public void step() {
         if (bichitosTiempo.isEmpty()) return;
 
         List<BichitoInterface> genActual = bichitosTiempo.get(bichitosTiempo.size() - 1);
@@ -72,77 +71,78 @@ public class GridLogic {
 
         int filas = grid.getMatrix().length;
         int columnas = grid.getMatrix()[0].length;
-
         boolean[][] casillasOcupadas = new boolean[filas][columnas];
         Random r = new Random();
+        boolean huboActividad = false;
 
         List<BichitoInterface> bichosOrdenados = new ArrayList<>(genActual);
         bichosOrdenados.sort((b1, b2) -> {
             Posicion p1 = b1.getPosicion();
             Posicion p2 = b2.getPosicion();
-            if (p1.x != p2.x) {
-                return Integer.compare(p1.x, p2.x);
-            }
-             return Integer.compare(p2.y, p1.y);
+            if (p1.x != p2.x) return Integer.compare(p1.x, p2.x);
+            return Integer.compare(p2.y, p1.y);
         });
 
         for (BichitoInterface bicho : bichosOrdenados) {
-            Posicion pos = bicho.getPosicion();
-            if (bicho instanceof BichitoQuieto) {
-                genNueva.add(new BichitoQuieto(new Posicion(pos.x, pos.y)));
+            if (bicho instanceof BichitoQuieto || bicho instanceof BichitoMitosis) {
+                Posicion pos = bicho.getPosicion();
+                if (bicho instanceof BichitoQuieto) {
+                    genNueva.add(new BichitoQuieto(new Posicion(pos.x, pos.y)));
+                } else {
+                    genNueva.add(new BichitoMitosis(new Posicion(pos.x, pos.y)));
+                }
                 casillasOcupadas[pos.x][pos.y] = true;
             }
         }
 
         for (BichitoInterface bicho : bichosOrdenados) {
-            Posicion pos = bicho.getPosicion();
-            if (bicho instanceof BichitoMitosis) {
-                genNueva.add(new BichitoMitosis(new Posicion(pos.x, pos.y)));
-                casillasOcupadas[pos.x][pos.y] = true;
-            }
-        }
-
-        for (BichitoInterface bicho : bichosOrdenados) {
-            Posicion pos = bicho.getPosicion();
             if (bicho instanceof BichitoMovil) {
+                Posicion pos = bicho.getPosicion();
                 List<Posicion> libres = obtenerAdyacentesLibres(pos, casillasOcupadas, filas, columnas);
+
                 if (!libres.isEmpty() && r.nextInt(2) == 0) {
                     Posicion nuevaPos = libres.get(r.nextInt(libres.size()));
                     genNueva.add(new BichitoMovil(nuevaPos));
                     casillasOcupadas[nuevaPos.x][nuevaPos.y] = true;
-                    stuck = false;
+                    huboActividad = true;
                 } else {
-                    final Posicion posFinal = pos;
-                    genNueva.removeIf(b -> b instanceof BichitoMitosis
-                            && b.getPosicion().equals(posFinal));
-                    genNueva.add(new BichitoMovil(new Posicion(pos.x, pos.y)));
-                    casillasOcupadas[pos.x][pos.y] = true;
+                    if (!casillasOcupadas[pos.x][pos.y]) {
+                        genNueva.add(new BichitoMovil(new Posicion(pos.x, pos.y)));
+                        casillasOcupadas[pos.x][pos.y] = true;
+                    } else {
+                        if (!libres.isEmpty()) {
+                            Posicion emergencia = libres.get(0);
+                            genNueva.add(new BichitoMovil(emergencia));
+                            casillasOcupadas[emergencia.x][emergencia.y] = true;
+                            huboActividad = true;
+                        }
+                    }
                 }
             }
         }
 
         for (BichitoInterface bicho : bichosOrdenados) {
-            Posicion pos = bicho.getPosicion();
             if (bicho instanceof BichitoMitosis) {
+                Posicion pos = bicho.getPosicion();
                 List<Posicion> libres = obtenerAdyacentesLibres(pos, casillasOcupadas, filas, columnas);
+
                 if (!libres.isEmpty() && r.nextInt(4) == 0) {
                     Posicion nuevaPos = libres.get(r.nextInt(libres.size()));
                     genNueva.add(new BichitoMitosis(nuevaPos));
                     casillasOcupadas[nuevaPos.x][nuevaPos.y] = true;
-                    stuck = false;
+                    huboActividad = true;
                 }
             }
         }
 
-        if(stuck){
+        if (!huboActividad) {
             roundsStuck++;
-        }else{
-            roundsStuck=0;
+        } else {
+            roundsStuck = 0;
         }
 
         bichitosTiempo.add(genNueva);
     }
-
     /**
      * Obtiene el objeto Grid actual asociado a la simulación.
      * @return El tablero (Grid) físico donde se desarrolla la simulación.
