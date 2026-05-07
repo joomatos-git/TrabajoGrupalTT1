@@ -3,12 +3,14 @@ package test.LogicaNegocio;
 import main.ModeloDominio.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-//Test unitario para cada bicho, constructor getters y setters
 
+/**
+ * Tests unitarios estructurales de las entidades del modelo de dominio.
+ * Verifica la correcta instanciación y el acceso a los atributos básicos de las criaturas.
+ */
 public class TestBichitos {
 
    //BichoQuieto
-
     @Test
     void testBichitoQuieto_getPosicionDevuelvePosicionInicial() {
         Posicion pos = new Posicion(2, 3);
@@ -31,7 +33,6 @@ public class TestBichitos {
     }
 
     //BichoMovil
-
     @Test
     void testBichitoMovil_getPosicionDevuelvePosicionInicial() {
         Posicion pos = new Posicion(4, 7);
@@ -54,7 +55,6 @@ public class TestBichitos {
     }
 
     //BichoMitosis
-
     @Test
     void testBichitoMitosis_getPosicionDevuelvePosicionInicial() {
         Posicion pos = new Posicion(0, 9);

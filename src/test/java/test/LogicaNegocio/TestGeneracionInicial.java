@@ -8,7 +8,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Tests de verificación de la configuración inicial.
+ * Comprueba que el tablero se puebla con las cantidades exactas requeridas
+ * y que las posiciones iniciales son siempre válidas y sin solapamientos.
+ */
 public class TestGeneracionInicial {
 
     GridLogic grid1;

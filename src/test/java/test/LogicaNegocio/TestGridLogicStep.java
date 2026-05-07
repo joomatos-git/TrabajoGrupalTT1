@@ -9,6 +9,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests de integración del motor de simulación.
+ * Verifica el correcto avance del tiempo (step), la prevención de colisiones,
+ * el respeto a los límites del tablero y la condición de parada del sistema.
+ */
 public class TestGridLogicStep {
 
     private GridLogic gridLogic;

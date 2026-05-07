@@ -11,9 +11,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * Tests de validación de comportamiento específico.
+ * Comprueba que las reglas de movimiento, restricciones de adyacencia
+ * y/o clonación de esta criatura se cumplen a lo largo del tiempo.
+ */
 public class TestMitosis {
 
     GridLogic grid1;

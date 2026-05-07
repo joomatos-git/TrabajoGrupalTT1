@@ -5,7 +5,11 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Tests de la capa de presentación REST.
+ * Verifica que los endpoints HTTP responden con los códigos de estado correctos
+ * (200 OK, 404 Not Found) ante peticiones válidas e inválidas.
+ */
 public class TestSimulacionController {
 
     private SimulacionController controller;

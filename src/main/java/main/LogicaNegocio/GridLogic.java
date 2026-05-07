@@ -1,17 +1,35 @@
 package main.LogicaNegocio;
 
 import main.ModeloDominio.*;
-
 import java.util.*;
-public class GridLogic {
-    Grid grid;
-    List<List<BichitoInterface>> bichitosTiempo;
-    int roundsStuck=0;
 
+/**
+ * Motor principal de la simulación. Gestiona la cuadrícula, la inicialización
+ * de criaturas y la evolución temporal del sistema.
+ */
+public class GridLogic {
+    private Grid grid;
+    private List<List<BichitoInterface>> bichitosTiempo;
+    private int roundsStuck=0;
+
+    /**
+     * Inicializa la lógica con una cuadrícula de 10x10 y coloca las criaturas.
+     * @param cantidadesIniciales Array con el número de bichitos [Quietos, Moviles, Mitosis].
+     */
     public GridLogic(int[] cantidadesIniciales) {
         grid = new Grid(10, 10);
         initialize(cantidadesIniciales[0], cantidadesIniciales[1], cantidadesIniciales[2]);
     }
+    
+    /**
+     * Inicializa el tablero y distribuye aleatoriamente las cantidades especificadas
+     * de cada tipo de criatura asegurando que cada una ocupe una posición única.
+     * Se crea una lista de todas las posiciones posibles, se baraja aleatoriamente 
+     * y se asignan en orden.
+     * @param numQuietos Número de criaturas iniciales de tipo Quieto.
+     * @param numMoviles Número de criaturas iniciales de tipo Móvil.
+     * @param numMitosis Número de criaturas iniciales de tipo Mitosis.
+     */
     public void initialize(int numQuietos, int numMoviles, int numMitosis) {
         bichitosTiempo = new ArrayList<>();
         bichitosTiempo.add(new ArrayList<>());
@@ -36,6 +54,14 @@ public class GridLogic {
             bichitosTiempo.get(0).add(new BichitoMitosis(posiciones.get(idx)));
         }
     }
+    
+    /**
+     * Ejecuta el paso del tiempo (instante).
+     * Aplica reglas de prioridad (fila superior y columna derecha) y procesa:
+     * - Movimiento de criaturas (50% de probabilidad).
+     * - Mitosis de criaturas (25% de probabilidad).
+     * Detecta si el sistema se encuentra en un estado bloqueado (stuck).
+     */
     public void step(){
         boolean stuck=true;
 
@@ -117,23 +143,50 @@ public class GridLogic {
         bichitosTiempo.add(genNueva);
     }
 
+    /**
+     * Obtiene el objeto Grid actual asociado a la simulación.
+     * @return El tablero (Grid) físico donde se desarrolla la simulación.
+     */
     public Grid getGrid(){
         return grid;
     }
 
+    /**
+     * Reemplaza el objeto Grid actual por uno nuevo.
+     * @param g El nuevo tablero (Grid) que se asignará a la lógica.
+     */
     public void setGrid(Grid g){
         grid=g;
     }
 
+    /**
+     * Recupera el historial completo de la simulación.
+     * @return Una lista de listas, donde cada lista interna representa 
+     * el estado de todas las criaturas (BichitoInterface) en un instante de tiempo concreto.
+     */
     public List<List<BichitoInterface>> getBichitosTiempo(){
         return bichitosTiempo;
     }
 
+    /**
+     * Limpia el estado interno de la simulación.
+     * Vacía el historial de criaturas y elimina la matriz de datos del tablero,
+     * liberando recursos y dejando la lógica lista para ser reinicializada o destruida.
+     */
     public void teardown(){
         bichitosTiempo.clear();
         grid.setMatrix(null);
     }
 
+    /**
+     * Obtiene casillas adyacentes (N, S, E, O) que no estén ocupadas y que se 
+     * encuentren dentro de los límites físicos del tablero.
+     * @param p Posición de origen desde la que se buscan adyacentes.
+     * @param ocupadas Matriz de booleanos que indica casillas ya reservadas en este turno.
+     * @param maxFilas Número máximo de filas del tablero (límite inferior/superior).
+     * @param maxCols Número máximo de columnas del tablero (límite lateral).
+     * @return libres Lista de posiciones válidas y libres.
+     */
     private List<Posicion> obtenerAdyacentesLibres(Posicion p, boolean[][] ocupadas, int maxFilas, int maxCols) {
         List<Posicion> libres = new ArrayList<>();
         int[][] direcciones = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -149,7 +202,13 @@ public class GridLogic {
         return libres;
     }
 
-
+    /**
+     * Compara esta instancia de GridLogic con otro objeto para determinar si son iguales.
+     * Se considera que dos lógicas de simulación son iguales si su historial de 
+     * criaturas a lo largo del tiempo (bichitosTiempo) es idéntico.
+     * @param o El objeto a comparar.
+     * @return true si el objeto es de tipo GridLogic y sus historiales coinciden, false en caso contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +216,10 @@ public class GridLogic {
         return Objects.equals(this.bichitosTiempo, other.bichitosTiempo);
     }
 
+    /**
+     * Indica si la simulación ha terminado por falta de actividad.
+     * @return true si el sistema ha estado atascado durante 10 rondas consecutivas.
+     */
     public boolean isStuck(){
         return roundsStuck>=10;
     }

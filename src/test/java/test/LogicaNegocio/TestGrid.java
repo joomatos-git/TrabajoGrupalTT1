@@ -5,6 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests unitarios de la estructura física del tablero.
+ * Verifica la correcta creación de la matriz bidimensional y el acceso a sus celdas.
+ */
 public class TestGrid {
 
     private Grid grid;

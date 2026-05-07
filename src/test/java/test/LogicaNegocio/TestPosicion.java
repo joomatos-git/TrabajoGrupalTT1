@@ -4,7 +4,11 @@ import main.ModeloDominio.Posicion;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Tests unitarios para la clase Posicion.
+ * Verifica que la comparación de coordenadas (equals) funciona correctamente
+ * para la resolución de conflictos en el tablero.
+ */
 public class TestPosicion {
 
     @Test

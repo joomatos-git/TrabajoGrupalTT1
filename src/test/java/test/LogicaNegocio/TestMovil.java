@@ -14,7 +14,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-
+/**
+ * Tests de validación de comportamiento específico.
+ * Comprueba que las reglas de movimiento, restricciones de adyacencia
+ * y/o clonación de esta criatura se cumplen a lo largo del tiempo.
+ */
 public class TestMovil {
 
     GridLogic grid1;

@@ -7,6 +7,11 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests de la capa de servicio.
+ * Comprueba la correcta generación de tokens de sesión, el almacenamiento del 
+ * historial de simulación en memoria y el formateo de los datos de salida.
+ */
 /*public class TestSimulacionServiceImpl {
 
     private SimulacionServiceImpl service;

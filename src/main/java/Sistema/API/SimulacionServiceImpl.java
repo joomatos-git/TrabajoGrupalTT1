@@ -5,16 +5,25 @@ import main.ModeloDominio.BichitoInterface;
 import main.ModeloDominio.BichitoMitosis;
 import main.ModeloDominio.BichitoMovil;
 import main.ModeloDominio.BichitoQuieto;
-import main.ModeloDominio.Grid;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Implementación del servicio de simulación. Encargada de mantener el estado
+ * de las sesiones activas en memoria y procesar el historial de datos.
+ */
 @Service
 public class SimulacionServiceImpl implements ISimulacionService {
 
+    // Almacén en memoria de las simulaciones activas, indexadas por su token.
     private Map<Integer, GridLogic> simulaciones = new HashMap<>();
 
+    /**
+     * Crea e inicia una nueva instancia de simulación, calculando hasta 50 instantes.
+     * @param configuracion Configuración inicial enviada por el cliente.
+     * @return Token entero positivo generado para la sesión.
+     */
     @Override
     public int iniciarSimulacion(ConfiguracionDTO configuracion) {
         int token = Math.abs(UUID.randomUUID().hashCode());
@@ -31,6 +40,12 @@ public class SimulacionServiceImpl implements ISimulacionService {
         return token;
     }
 
+    /**
+     * Transforma el historial de BichitoInterface a un string multilínea formateado.
+     * El formato devuelto es: instante, y, x, color_hexadecimal.
+     * @param token Identificador de la simulación.
+     * @return Objeto EstadoTableroDTO con los datos, o null si el token no existe.
+     */
     @Override
     public EstadoTableroDTO getEstado(int token) {
         if (!simulaciones.containsKey(token)) {
