@@ -174,15 +174,6 @@ El proyecto está orientado a **tests**, con cobertura de:
 - **Metodología**: Scrum / Kanban con sprints semanales
 
 
-
-### Missing por ahora:
-
-- TestMovil falta por tener en cuenta si se mueve solo a contiguas. Tirar algun test mas con ese rollo
-- TestMitosis falta por tener en cuenta otras tantas cosillas como q de nuevo solo se multiplica contiguas vacías, o que no se multiplica todos los turnos.
-- GridLogic tiene el step efectuando mitosis TODOS los turnos (debería ser probabilidad del 25%) y lo mismo con el movimiento (rollo un 50%)?
-
-
-
 &nbsp;
 
 &nbsp;
