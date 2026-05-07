@@ -1,5 +1,9 @@
 package Sistema.API;
 
+/**
+ * Interfaz que define los métodos necesarios para el servicio de simulación.
+ * Gestiona el ciclo de vida de la lógica del tablero y la obtención de historiales.
+ */
 public interface ISimulacionService {
     
     /**

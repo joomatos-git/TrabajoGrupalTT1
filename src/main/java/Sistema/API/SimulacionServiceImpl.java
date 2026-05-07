@@ -20,6 +20,11 @@ public class SimulacionServiceImpl implements ISimulacionService {
     private Map<Integer, GridLogic> simulaciones = new HashMap<>();
 
     /**
+     * Constructor por defecto que inicializa el servicio de simulación.
+     */
+    public SimulacionServiceImpl() {}
+    
+    /**
      * Crea e inicia una nueva instancia de simulación, calculando hasta 50 instantes.
      * @param configuracion Configuración inicial enviada por el cliente.
      * @return Token entero positivo generado para la sesión.

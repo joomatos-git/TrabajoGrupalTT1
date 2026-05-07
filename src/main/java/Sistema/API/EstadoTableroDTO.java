@@ -18,15 +18,29 @@ public class EstadoTableroDTO {
     private String data;
 
 
-    // Constructor vacío necesario para que Jackson pueda crear el objeto.
+    /**
+     * Constructor sin paráremtros necesario para que la librería Jackson pueda deserializar el objeto.
+     */
     public EstadoTableroDTO() {}
 
-    // Constructor cómodo para crear el objeto de una vez.
+    /**
+     * Constructor que inicializa el objeto con la traza de la simulación.
+     * @param data String multilínea con los datos de la simulación.
+     */
     public EstadoTableroDTO(String data) {
         this.data = data;
 
     }
-    // Getters, Jackson los necesita para convertir a JSON.
+    
+    /**
+     * Obtiene el instante actual (usado para consultas individuales).
+     * @return El número del instante.
+     */
     public int getInstante() { return instante; }
+    
+    /**
+     * Obtiene los datos del tablero formateados.
+     * @return Cadena de texto con la información de todos los turnos.
+     */
     public String getData() { return data; }
 }

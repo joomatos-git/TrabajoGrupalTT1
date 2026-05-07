@@ -18,7 +18,10 @@ public class Grid {
         this.matrix = new int[row][col];
     }
     
-    /** @return La matriz de datos del tablero. */
+    /**
+     * Obtiene la matriz representativa del estado actual del tablero.
+     * @return La matriz de datos del tablero. 
+     */
     public int[][] getMatrix(){
         return matrix;
     }

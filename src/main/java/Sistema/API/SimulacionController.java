@@ -17,7 +17,10 @@ public class SimulacionController {
     private ISimulacionService simulacionService;
 
     
-    // Constructor añadido para tests
+    /**
+     * Constructor que inyecta la dependencia del servicio de simulación.
+     * @param simulacionService Implementación del servicio de lógica de negocio.
+     */
     public SimulacionController(ISimulacionService simulacionService) {
         this.simulacionService = simulacionService;
     }

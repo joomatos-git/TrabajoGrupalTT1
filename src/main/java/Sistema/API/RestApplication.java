@@ -9,7 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class RestApplication {
-
+    
+    /**
+     * Constructor por defecto de la aplicación Spring Boot.
+     */
+    public RestApplication() {}
+    
     /**
      * Método principal que inicia la ejecución de la aplicación.
      * @param args Argumentos pasados por línea de comandos al iniciar el programa.
