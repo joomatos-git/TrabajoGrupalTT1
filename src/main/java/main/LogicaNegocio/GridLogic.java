@@ -62,7 +62,6 @@ public class GridLogic {
      * - Mitosis de criaturas (25% de probabilidad).
      * Detecta si el sistema se encuentra en un estado bloqueado (stuck).
      */
-
     public void step() {
         if (bichitosTiempo.isEmpty()) return;
 
@@ -83,6 +82,13 @@ public class GridLogic {
             return Integer.compare(p2.y, p1.y);
         });
 
+        // FASE DE RESERVA GLOBAL 
+        for (BichitoInterface bicho : bichosOrdenados) {
+            Posicion pos = bicho.getPosicion();
+            casillasOcupadas[pos.x][pos.y] = true;
+        }
+
+        // FASE ESTÁTICA
         for (BichitoInterface bicho : bichosOrdenados) {
             if (bicho instanceof BichitoQuieto || bicho instanceof BichitoMitosis) {
                 Posicion pos = bicho.getPosicion();
@@ -91,36 +97,33 @@ public class GridLogic {
                 } else {
                     genNueva.add(new BichitoMitosis(new Posicion(pos.x, pos.y)));
                 }
-                casillasOcupadas[pos.x][pos.y] = true;
             }
         }
 
+        // FASE DE MOVIMIENTO
         for (BichitoInterface bicho : bichosOrdenados) {
             if (bicho instanceof BichitoMovil) {
                 Posicion pos = bicho.getPosicion();
+                
+                // Liberamos su casilla actual momentáneamente para que no se auto-bloquee
+                casillasOcupadas[pos.x][pos.y] = false;
                 List<Posicion> libres = obtenerAdyacentesLibres(pos, casillasOcupadas, filas, columnas);
 
                 if (!libres.isEmpty() && r.nextInt(2) == 0) {
+                    // Se mueve a una nueva casilla libre
                     Posicion nuevaPos = libres.get(r.nextInt(libres.size()));
                     genNueva.add(new BichitoMovil(nuevaPos));
-                    casillasOcupadas[nuevaPos.x][nuevaPos.y] = true;
+                    casillasOcupadas[nuevaPos.x][nuevaPos.y] = true; 
                     huboActividad = true;
                 } else {
-                    if (!casillasOcupadas[pos.x][pos.y]) {
-                        genNueva.add(new BichitoMovil(new Posicion(pos.x, pos.y)));
-                        casillasOcupadas[pos.x][pos.y] = true;
-                    } else {
-                        if (!libres.isEmpty()) {
-                            Posicion emergencia = libres.get(0);
-                            genNueva.add(new BichitoMovil(emergencia));
-                            casillasOcupadas[emergencia.x][emergencia.y] = true;
-                            huboActividad = true;
-                        }
-                    }
+                    // Decide no moverse o no tiene casillas libres
+                    genNueva.add(new BichitoMovil(new Posicion(pos.x, pos.y)));
+                    casillasOcupadas[pos.x][pos.y] = true; 
                 }
             }
         }
 
+        // FASE DE EXPANSIÓN
         for (BichitoInterface bicho : bichosOrdenados) {
             if (bicho instanceof BichitoMitosis) {
                 Posicion pos = bicho.getPosicion();
@@ -143,6 +146,7 @@ public class GridLogic {
 
         bichitosTiempo.add(genNueva);
     }
+    
     /**
      * Obtiene el objeto Grid actual asociado a la simulación.
      * @return El tablero (Grid) físico donde se desarrolla la simulación.
