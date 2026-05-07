@@ -151,6 +151,10 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 **Joseba (Arquitecto)**
 - Prueba de integración completa entre el trabajo grupal (backend) y el trabajo individual (frontend): arranque de ambos servicios en local, verificación del flujo completo desde la solicitud de simulación hasta la visualización del tablero.
 
+**Raúl (Documentador)**
+- **Manual de Usuario:** Redacción y estructuración del fichero `manualUsuario.md`, detallando los requisitos del sistema, los endpoints actualizados de la API (`/Solicitud/Solicitar` y `/Resultados`), ejemplos prácticos de uso con cURL...
+- **Javadoc del Código Fuente:** Creación de la documentación estandarizada Javadoc para todas las capas del proyecto.
+
 ## Estrategia de pruebas
 
 El proyecto está orientado a **tests**, con cobertura de:
