@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  simulador:
+    image: joomatos/simulador
+    container_name: simulador-container
+    ports:
+      - "8080:8080"   # acceso a simulador desde tu máquina
+      - "50000:50000" # acceso a individual desde tu máquina (comparten red)
+    networks:
+      - app-network
+
+  individual:
+    image: joomatos/individual
+    container_name: individual-container
+    network_mode: "service:simulador"
+    depends_on:
+      - simulador
+
+networks:
+  app-network:
+    driver: bridge
