@@ -29,6 +29,22 @@ Nosotros desarrollamos el **servicio (backend)**. La capa de presentación la ge
 3. Con ese token, el usuario puede realizar peticiones HTTP para consultar el estado de la isla en distintos momentos (pueden pasar intervalos de tiempo entre peticiones).
 
 
+## Estrategia de pruebas
+
+El proyecto está orientado a **tests**, con cobertura de:
+
+- **Tests unitarios**: validación de comportamiento individual de cada tipo de criatura.
+- **Tests de integración**: validación del sistema completo (inicialización de cuadrícula, avance de la simulación, resolución de conflictos, condición de fin).
+
+## Tecnologías
+
+- **Lenguaje**: Java 17
+- **Framework**: Spring Boot 3.2.4
+- **Gestión de dependencias**: Maven
+- **Gestión de proyecto**: GitHub Projects (Kanban)
+- **Metodología**: Scrum / Kanban con sprints semanales
+
+
 ## Gestión de roles
 
 ## Gestión de roles
@@ -166,28 +182,6 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - Cambio de la paleta de colores de los tres tipos de criaturas para mejorar la accesibilidad de personas con daltonismo u otras deficiencias visuales.
 - Revisión y actualización del manual de usuario para reflejar el estado actual del sistema.
 - Inicio de la configuración de un contenedor Docker para facilitar el despliegue del backend: se comenzó en Windows, donde surgieron problemas de compatibilidad. Tras reiniciar el equipo y cambiar a Linux no hubo tiempo suficiente para completarlo. **Queda pendiente para el próximo sprint.**
-
-## Estrategia de pruebas
-
-El proyecto está orientado a **tests**, con cobertura de:
-
-- **Tests unitarios**: validación de comportamiento individual de cada tipo de criatura.
-- **Tests de integración**: validación del sistema completo (inicialización de cuadrícula, avance de la simulación, resolución de conflictos, condición de fin).
-
-## Tecnologías
-
-- **Lenguaje**: Java 17
-- **Framework**: Spring Boot 3.2.4
-- **Gestión de dependencias**: Maven
-- **Gestión de proyecto**: GitHub Projects (Kanban)
-- **Metodología**: Scrum / Kanban con sprints semanales
-
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
 
 
 NOTAS:
