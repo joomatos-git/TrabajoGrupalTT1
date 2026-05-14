@@ -158,6 +158,15 @@ Los roles rotan cada sprint. Cada sprint tiene un Desarrollador distinto y los o
 - **Manual de Usuario:** Redacción y estructuración del fichero `manualUsuario.md`, detallando los requisitos del sistema, los endpoints actualizados de la API (`/Solicitud/Solicitar` y `/Resultados`), ejemplos prácticos de uso con cURL...
 - **Javadoc del Código Fuente:** Creación de la documentación estandarizada Javadoc para todas las capas del proyecto.
 
+### Sprint 5
+
+**Todos (trabajo conjunto)**
+
+- Corrección de un bug en `GridLogic.step()` por el cual algunas criaturas de tipo Mitosis desaparecían durante el procesamiento.
+- Cambio de la paleta de colores de los tres tipos de criaturas para mejorar la accesibilidad de personas con daltonismo u otras deficiencias visuales.
+- Revisión y actualización del manual de usuario para reflejar el estado actual del sistema.
+- Inicio de la configuración de un contenedor Docker para facilitar el despliegue del backend: se comenzó en Windows, donde surgieron problemas de compatibilidad. Tras reiniciar el equipo y cambiar a Linux no hubo tiempo suficiente para completarlo. **Queda pendiente para el próximo sprint.**
+
 ## Estrategia de pruebas
 
 El proyecto está orientado a **tests**, con cobertura de:
