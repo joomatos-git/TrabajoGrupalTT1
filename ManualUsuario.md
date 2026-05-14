@@ -5,7 +5,7 @@ Este documento describe los pasos necesarios para ejecutar y consumir la API del
 ## 1. Requisitos del Sistema
 * **Java 17** o superior.
 * **Maven** para la gestión de dependencias y ejecución.
-* Un cliente para realizar peticiones HTTP (como **Postman**, **Insomnia** o comandos **cURL**).
+* Un cliente para realizar peticiones HTTP (como **Postman**, **Insomnia**, comandos **cURL** o el uso del **trabajo individual** de la asignatura).
 
 ## 2. Puesta en Marcha
 Para iniciar el servidor de la API:
@@ -46,10 +46,10 @@ La respuesta del endpoint de resultados contiene un objeto con una clave data. S
 
 * **Primera línea:** Tamaño del lado de la cuadrícula (ej. 10).
 * **Resto de líneas:** Estado de cada bicho en el formato instante,y,x,color_hexadecimal.
-* Colores representados:
-  *  #f50057 (Rosa): Criatura Quieta.
-  *  #d500f9 (Morado): Criatura Móvil.
-  *  #00c853 (Verde): Criatura Mitosis.
+* Colores usados teniendo en cuenta las diferentes deficiencias visuales:
+  *  #FF0000 (Rojo): Criatura Quieta.
+  *  #EA63FF (Morado): Criatura Móvil.
+  *  #00FF00 (Verde): Criatura Mitosis.
 
 ### D. Ejemplo rápido con cURL
 * **1. Solicitar simulación**
